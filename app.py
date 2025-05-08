@@ -1,74 +1,121 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from pymongo import MongoClient
-import os
+import random
+from bson import json_util
+import json
+from groq import Groq
 
 app = Flask(__name__)
-app.secret_key = os.urandom(24)
+app.secret_key = 'your-secret-key-here'  # Required for session management
 
-# MongoDB configuration
+# MongoDB connection
 client = MongoClient("mongodb+srv://alasylkhh:123@cluster0.6fmla.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
-db = client['users']
-users = db['users']
+db = client['questions']
+questions_collection = db['algebra']
+
+# Groq AI setup
+GROQ_API_KEY = "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"
+groq_client = Groq(api_key=GROQ_API_KEY)
+
+SYSTEM_PROMPT = """You are a helpful AI assistant for teaching math.
+When answering math questions, you will:
+1. Write formulas using plain Markdown formatting (e.g., a^2 + b^2 = c^2)
+2. Explain each step of the solution clearly and logically
+3. Keep explanations concise but complete—neither too short nor too long
+4. Give examples when useful, but stay focused on the main problem
+5. Use simple, clear language appropriate for a student audience
+6. Always explain why each step is taken, not just what to do
+7. Be honest if you're unsure, and guide the user on how to find the answer
+"""
+
+def ask_ai(user_question, exercise_context=None):
+    messages = [
+        {"role": "system", "content": SYSTEM_PROMPT}
+    ]
+    if exercise_context:
+        messages.append({"role": "user", "content": f"Exercise context: {exercise_context}"})
+    messages.append({"role": "user", "content": user_question})
+
+    chat_completion = groq_client.chat.completions.create(
+        messages=messages,
+        model="llama-3.3-70b-versatile",
+        temperature=0.7,
+        max_tokens=1000,
+    )
+    return chat_completion.choices[0].message.content
 
 @app.route('/')
 def index():
-    if 'user' in session:
-        return redirect(url_for('home'))
     return render_template('index.html')
 
-@app.route('/signup', methods=['GET', 'POST'])
-def signup():
-    if request.method == 'POST':
-        email = request.form.get('email')
-        password = request.form.get('password')
-        name = request.form.get('name')
-
-        # Check if user exists
-        if users.find_one({'email': email}):
-            flash('Email already registered!')
-            return redirect(url_for('signup'))
-
-        # Create new user
-        user_data = {
-            'email': email,
-            'password': password,
-            'name': name
-        }
-        users.insert_one(user_data)
-        
-        flash('Registration successful! Please login.')
-        return redirect(url_for('login'))
+@app.route('/start_test')
+def start_test():
+    # Get 5 random questions from the database
+    questions = list(questions_collection.aggregate([{'$sample': {'size': 5}}]))
     
-    return render_template('signup.html')
+    # Convert MongoDB documents to JSON-serializable format
+    serialized_questions = json.loads(json_util.dumps(questions))
+    
+    session['questions'] = serialized_questions
+    session['current_question'] = 0
+    session['score'] = 0
+    return redirect(url_for('question'))
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
+@app.route('/question', methods=['GET', 'POST'])
+def question():
+    if 'questions' not in session:
+        return redirect(url_for('index'))
+    
     if request.method == 'POST':
-        email = request.form.get('email')
-        password = request.form.get('password')
+        # Check the answer
+        user_answer = request.form.get('answer')
+        current_question = session['questions'][session['current_question']]
         
-        user = users.find_one({'email': email, 'password': password})
-        if user:
-            session['user'] = {
-                'email': user['email'],
-                'name': user.get('name', '')
-            }
-            return redirect(url_for('home'))
+        if user_answer == current_question['answer']:
+            session['score'] += 1
         
-        flash('Invalid email or password!')
-    return render_template('login.html')
+        session['current_question'] += 1
+        
+        if session['current_question'] >= len(session['questions']):
+            return redirect(url_for('result'))
+        
+        return redirect(url_for('question'))
+    
+    current_question = session['questions'][session['current_question']]
+    return render_template('question.html', 
+                         question=current_question,
+                         question_number=session['current_question'] + 1,
+                         total_questions=len(session['questions']))
 
-@app.route('/home')
-def home():
-    if 'user' not in session:
-        return redirect(url_for('login'))
-    return render_template('home.html', user=session['user'])
+@app.route('/ask_ai', methods=['POST'])
+def handle_ai_question():
+    data = request.get_json()
+    user_question = data.get('question')
+    current_question = session['questions'][session['current_question']]
+    
+    # Create context from current question
+    context = f"Current question: {current_question['question']}"
+    
+    # Get AI response
+    response = ask_ai(user_question, context)
+    return jsonify({'response': response})
 
-@app.route('/logout')
-def logout():
-    session.pop('user', None)
-    flash('You have been logged out.')
-    return redirect(url_for('index'))
+@app.route('/result')
+def result():
+    if 'score' not in session:
+        return redirect(url_for('index'))
+    
+    score = session['score']
+    total = len(session['questions'])
+    percentage = (score / total) * 100
+    
+    # Clear session data
+    session.clear()
+    
+    return render_template('result.html', 
+                         score=score,
+                         total=total,
+                         percentage=percentage)
 
 if __name__ == '__main__':
     app.run(debug=True)
