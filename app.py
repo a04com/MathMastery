@@ -3,6 +3,7 @@ from pymongo import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 from groq import Groq
+from bson import ObjectId
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -83,7 +84,11 @@ def signin():
 def dashboard():
     if 'username' not in session:
         return redirect(url_for('signin'))
-    return render_template('dashboard.html', username=session['username'])
+    username = session['username']
+    user = users.find_one({'username': username})
+    algebra_solved = user.get('algebra_solved', 0)
+    total_algebra = questions_algebra.count_documents({})
+    return render_template('dashboard.html', username=username, algebra_solved=algebra_solved, total_algebra=total_algebra)
 
 @app.route('/signout')
 def signout():
@@ -94,18 +99,35 @@ def signout():
 def algebra_topic(topic):
     exercises = list(questions_algebra.find({'topic': topic}))
     feedback = {}
+    username = session.get('username')
+    user = users.find_one({'username': username}) if username else None
+    solved_ids = set(user.get('algebra_solved_ids', [])) if user else set()
+    new_correct = 0
     if request.method == 'POST':
         for ex in exercises:
+            qid_str = str(ex['_id'])
             user_answer_idx = request.form.get(f'answer_{ex["_id"]}')
             if user_answer_idx is not None:
                 try:
                     user_answer_idx = int(user_answer_idx)
                     is_correct = ex['options'][user_answer_idx] == ex['answer']
-                    feedback[str(ex['_id'])] = 'correct' if is_correct else 'incorrect'
+                    if is_correct:
+                        feedback[qid_str] = 'correct'
+                        if qid_str not in solved_ids:
+                            solved_ids.add(qid_str)
+                            new_correct += 1
+                    else:
+                        feedback[qid_str] = 'incorrect'
                 except Exception:
-                    feedback[str(ex['_id'])] = 'incorrect'
+                    feedback[qid_str] = 'incorrect'
             else:
-                feedback[str(ex['_id'])] = 'unanswered'
+                feedback[qid_str] = 'unanswered'
+        # Update user progress in DB
+        if user and new_correct > 0:
+            users.update_one(
+                {'_id': user['_id']},
+                {'$set': {'algebra_solved_ids': list(solved_ids), 'algebra_solved': len(solved_ids)}}
+            )
     return render_template('algebra_topic.html', topic=topic, exercises=exercises, feedback=feedback)
 
 @app.route('/ask_ai', methods=['POST'])
