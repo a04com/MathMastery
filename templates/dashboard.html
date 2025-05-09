@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container dashboard-container">
+        <div class="dashboard-header">
+            <h2>Welcome, {{ username }}!</h2>
+            <a href="{{ url_for('signout') }}" class="btn signout-btn">Sign Out</a>
+        </div>
+        <div class="sections-grid">
+            <!-- Algebra -->
+            <div class="section-card">
+                <div class="section-header">
+                    <span>Algebra</span>
+                    <a href="#" class="see-all">See all</a>
+                </div>
+                <ul class="topic-list">
+                    <li><span class="topic-icon">&#8721;</span> <a class="topic-link" href="{{ url_for('algebra_topic', topic='Variables') }}">Variables</a> <button class="topic-btn">Start</button></li>
+                    <li><span class="topic-icon">&#120121;</span> <a class="topic-link" href="{{ url_for('algebra_topic', topic='Equations') }}">Equations</a> <button class="topic-btn">Start</button></li>
+                    <li><span class="topic-icon">&#120123;</span> <a class="topic-link" href="{{ url_for('algebra_topic', topic='Functions') }}">Functions</a> <button class="topic-btn">Start</button></li>
+                    <li><span class="topic-icon">&#8804;</span> <a class="topic-link" href="{{ url_for('algebra_topic', topic='Inequalities') }}">Inequalities</a> <button class="topic-btn">Start</button></li>
+                    <li><span class="topic-icon">&#120130;</span> <a class="topic-link" href="{{ url_for('algebra_topic', topic='Quadratics') }}">Quadratics</a> <button class="topic-btn">Start</button></li>
+                    <li><span class="topic-icon">&#8756;</span> <a class="topic-link" href="{{ url_for('algebra_topic', topic='Systems') }}">Systems</a> <button class="topic-btn">Start</button></li>
+                </ul>
+            </div>
+            <!-- Geometry -->
+            <div class="section-card">
+                <div class="section-header">
+                    <span>Geometry</span>
+                    <a href="#" class="see-all">See all</a>
+                </div>
+                <ul class="topic-list">
+                    <li><span class="topic-icon">&#9675;</span> Circles <button class="topic-btn">Start</button></li>
+                    <li><span class="topic-icon">&#9651;</span> Triangles <button class="topic-btn">Start</button></li>
+                    <li><span class="topic-icon">&#9632;</span> Polygons <button class="topic-btn">Start</button></li>
+                </ul>
+            </div>
+            <!-- Trigonometry -->
+            <div class="section-card">
+                <div class="section-header">
+                    <span>Trigonometry</span>
+                    <a href="#" class="see-all">See all</a>
+                </div>
+                <ul class="topic-list">
+                    <li><span class="topic-icon">sin</span> Sine & Cosine <button class="topic-btn">Start</button></li>
+                    <li><span class="topic-icon">tan</span> Tangent <button class="topic-btn">Start</button></li>
+                    <li><span class="topic-icon">&#952;</span> Unit Circle <button class="topic-btn">Start</button></li>
+                </ul>
+            </div>
+            <!-- SAT -->
+            <div class="section-card">
+                <div class="section-header">
+                    <span>SAT</span>
+                    <a href="#" class="see-all">See all</a>
+                </div>
+                <ul class="topic-list">
+                    <li><span class="topic-icon">&#9733;</span> Practice Test 1 <button class="topic-btn">Start</button></li>
+                    <li><span class="topic-icon">&#9733;</span> Practice Test 2 <button class="topic-btn">Start</button></li>
+                    <li><span class="topic-icon">&#9733;</span> Math Strategies <button class="topic-btn">Start</button></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

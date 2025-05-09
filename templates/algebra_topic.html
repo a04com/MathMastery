@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ topic }} - Algebra Exercises</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container dashboard-container">
+        <div class="dashboard-header">
+            <h2>{{ topic }} Exercises</h2>
+            <a href="{{ url_for('dashboard') }}" class="btn signout-btn">Back to Dashboard</a>
+        </div>
+        <div class="exercises-list">
+            {% if exercises %}
+                {% for ex in exercises %}
+                    <div class="exercise-card">
+                        <div class="exercise-question">{{ ex['question'] }}</div>
+                        <ul class="exercise-options">
+                            {% for opt in ex['options'] %}
+                                <li>{{ opt }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No exercises found for this topic.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html> 
