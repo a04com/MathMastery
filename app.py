@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 from pymongo import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
+from groq import Groq
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -13,6 +14,24 @@ users = db['users']
 
 questions = client['questions']
 questions_algebra = questions['algebra']
+
+groq_client = Groq(api_key='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')
+
+def ask_groq_ai(exercise, user_message):
+    messages = [
+        {
+            "role": "system",
+            "content": "You are a helpful AI assistant for teaching math. When answering math questions, you will: 1. Write formulas using plain Markdown formatting (e.g., a^2 + b^2 = c^2) 2. Explain each step of the solution clearly and logically 3. Keep explanations concise but complete—neither too short nor too long 4. Give examples when useful, but stay focused on the main problem 5. Use simple, clear language appropriate for a student audience 6. Always explain why each step is taken, not just what to do 7. Be honest if you're unsure, and guide the user on how to find the answer."
+        },
+        {"role": "user", "content": f"Exercise: {exercise}\nUser question: {user_message}"}
+    ]
+    chat_completion = groq_client.chat.completions.create(
+        messages=messages,
+        model="llama-3.3-70b-versatile",
+        temperature=0.7,
+        max_tokens=1000,
+    )
+    return chat_completion.choices[0].message.content
 
 @app.route('/')
 def home():
@@ -88,6 +107,17 @@ def algebra_topic(topic):
             else:
                 feedback[str(ex['_id'])] = 'unanswered'
     return render_template('algebra_topic.html', topic=topic, exercises=exercises, feedback=feedback)
+
+@app.route('/ask_ai', methods=['POST'])
+def ask_ai():
+    data = request.get_json()
+    exercise = data.get('exercise', '')
+    user_message = data.get('message', '')
+    try:
+        ai_response = ask_groq_ai(exercise, user_message)
+        return jsonify({'response': ai_response})
+    except Exception as e:
+        return jsonify({'response': 'Sorry, there was an error with the AI service.'}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
