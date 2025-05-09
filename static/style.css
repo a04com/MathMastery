@@ -256,4 +256,37 @@ input:focus {
 }
 .exercise-options li:last-child {
     margin-bottom: 0;
+}
+
+/* Option button pill style */
+.option-btn {
+    background: #f3f6fd;
+    color: #667eea;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-size: 16px;
+    font-weight: 500;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    outline: none;
+    box-shadow: none;
+    display: inline-block;
+}
+.option-btn:hover {
+    background: #e9eefd;
+    color: #4b5fc9;
+}
+.option-btn.selected {
+    background: #667eea;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(102,126,234,0.10);
+}
+
+/* Remove default button focus outline for option buttons */
+.option-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #c3dafe;
 } 
