@@ -126,6 +126,21 @@ input:focus {
     margin-left: 10px;
 }
 
+.add-delete-btn {
+    background: #38a169;
+    color: #fff;
+    margin-right: 10px;
+    font-size: 14px;
+    padding: 6px 16px;
+    border-radius: 5px;
+    font-weight: 500;
+    transition: background 0.2s;
+    width: auto;
+    display: inline-block;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
 .sections-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;

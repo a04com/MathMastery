@@ -89,6 +89,7 @@ def dashboard():
         return redirect(url_for('signin'))
     username = session['username']
     user = users.find_one({'username': username})
+    title = user.get('title', None)
     algebra_solved = user.get('algebra_solved', 0)
     total_algebra = questions_algebra.count_documents({})
     geometry_solved = user.get('geometry_solved', 0)
@@ -97,7 +98,7 @@ def dashboard():
     total_trigonometry = questions_trigonometry.count_documents({})
     sat_solved = user.get('sat_solved', 0)
     total_sat = questions_sat.count_documents({})
-    return render_template('dashboard.html', username=username, algebra_solved=algebra_solved, total_algebra=total_algebra, geometry_solved=geometry_solved, total_geometry=total_geometry, trigonometry_solved=trigonometry_solved, total_trigonometry=total_trigonometry, sat_solved=sat_solved, total_sat=total_sat)
+    return render_template('dashboard.html', username=username, title=title, algebra_solved=algebra_solved, total_algebra=total_algebra, geometry_solved=geometry_solved, total_geometry=total_geometry, trigonometry_solved=trigonometry_solved, total_trigonometry=total_trigonometry, sat_solved=sat_solved, total_sat=total_sat)
 
 @app.route('/signout')
 def signout():
@@ -254,6 +255,114 @@ def ask_ai():
         return jsonify({'response': ai_response})
     except Exception as e:
         return jsonify({'response': 'Sorry, there was an error with the AI service.'}), 500
+
+@app.route('/add_delete', methods=['GET'])
+def add_delete():
+    if 'username' not in session:
+        return redirect(url_for('signin'))
+    username = session['username']
+    user = users.find_one({'username': username})
+    if not user or user.get('title') != 'admin':
+        flash('Access denied.')
+        return redirect(url_for('dashboard'))
+    # List of courses and their collections
+    courses = [
+        {'name': 'Algebra', 'collection': questions_algebra},
+        {'name': 'Geometry', 'collection': questions_geometry},
+        {'name': 'Trigonometry', 'collection': questions_trigonometry},
+        {'name': 'SAT', 'collection': questions_sat},
+    ]
+    # For now, just show the course names and topics
+    course_topics = {}
+    for course in courses:
+        topics = course['collection'].distinct('topic')
+        course_topics[course['name']] = topics
+    return render_template('add_delete.html', courses=courses, course_topics=course_topics)
+
+@app.route('/admin_get_exercises')
+def admin_get_exercises():
+    if 'username' not in session:
+        return jsonify({'error': 'Not logged in'}), 401
+    username = session['username']
+    user = users.find_one({'username': username})
+    if not user or user.get('title') != 'admin':
+        return jsonify({'error': 'Access denied'}), 403
+    course = request.args.get('course')
+    topic = request.args.get('topic')
+    if not course or not topic:
+        return jsonify({'error': 'Missing course or topic'}), 400
+    collection_map = {
+        'Algebra': questions_algebra,
+        'Geometry': questions_geometry,
+        'Trigonometry': questions_trigonometry,
+        'SAT': questions_sat,
+    }
+    collection = collection_map.get(course)
+    if collection is None:
+        return jsonify({'error': 'Invalid course'}), 400
+    exercises = list(collection.find({'topic': topic}))
+    for ex in exercises:
+        ex['_id'] = str(ex['_id'])
+    return jsonify({'exercises': exercises})
+
+@app.route('/admin_update_exercise', methods=['POST'])
+def admin_update_exercise():
+    if 'username' not in session:
+        return jsonify({'error': 'Not logged in'}), 401
+    username = session['username']
+    user = users.find_one({'username': username})
+    if not user or user.get('title') != 'admin':
+        return jsonify({'error': 'Access denied'}), 403
+    data = request.json
+    course = data.get('course')
+    ex_id = data.get('id')
+    question = data.get('question')
+    options = data.get('options')
+    answer = data.get('answer')
+    if not (course and ex_id and question and options and answer):
+        return jsonify({'error': 'Missing fields'}), 400
+    collection_map = {
+        'Algebra': questions_algebra,
+        'Geometry': questions_geometry,
+        'Trigonometry': questions_trigonometry,
+        'SAT': questions_sat,
+    }
+    collection = collection_map.get(course)
+    if collection is None:
+        return jsonify({'error': 'Invalid course'}), 400
+    result = collection.update_one({'_id': ObjectId(ex_id)}, {'$set': {'question': question, 'options': options, 'answer': answer}})
+    if result.modified_count:
+        return jsonify({'success': True})
+    else:
+        return jsonify({'error': 'Update failed'}), 400
+
+@app.route('/admin_delete_exercise', methods=['POST'])
+def admin_delete_exercise():
+    if 'username' not in session:
+        return jsonify({'error': 'Not logged in'}), 401
+    username = session['username']
+    user = users.find_one({'username': username})
+    if not user or user.get('title') != 'admin':
+        return jsonify({'error': 'Access denied'}), 403
+    data = request.json
+    course = data.get('course')
+    ex_id = data.get('id')
+    if not (course and ex_id):
+        return jsonify({'error': 'Missing fields'}), 400
+    collection_map = {
+        'Algebra': questions_algebra,
+        'Geometry': questions_geometry,
+        'Trigonometry': questions_trigonometry,
+        'SAT': questions_sat,
+    }
+    collection = collection_map.get(course)
+    if collection is None:
+        return jsonify({'error': 'Invalid course'}), 400
+    result = collection.delete_one({'_id': ObjectId(ex_id)})
+    if result.deleted_count:
+        return jsonify({'success': True})
+    else:
+        return jsonify({'error': 'Delete failed'}), 400
 
 if __name__ == '__main__':
     app.run(debug=True)

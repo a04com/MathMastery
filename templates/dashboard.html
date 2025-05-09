@@ -9,7 +9,10 @@
 <body>
     <div class="container dashboard-container">
         <div class="dashboard-header">
-            <h2>Welcome, {{ username }}!</h2>
+            <h2>Welcome, {{ username }}{% if title %}, {{ title }}{% endif %}!</h2>
+            {% if title == 'admin' %}
+                <a href="{{ url_for('add_delete') }}" class="btn add-delete-btn">Add/Delete</a>
+            {% endif %}
             <a href="{{ url_for('signout') }}" class="btn signout-btn">Sign Out</a>
         </div>
         <div class="sections-grid">
@@ -169,6 +172,19 @@
         font-size: 15px;
         color: #3182ce;
         font-weight: 500;
+    }
+    .add-delete-btn {
+        background: #38a169;
+        color: #fff;
+        margin-right: 10px;
+        font-size: 14px;
+        padding: 6px 16px;
+        border-radius: 5px;
+        font-weight: 500;
+        transition: background 0.2s;
+    }
+    .add-delete-btn:hover {
+        background: #276749;
     }
     </style>
 </body>
