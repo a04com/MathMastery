@@ -3,91 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ topic }} - Algebra Exercises</title>
+    <title>{{ topic }} - Trigonometry Exercises</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
-        .option-btn.selected {
-            background: #667eea;
-            color: #fff;
-            border: 1.5px solid #667eea;
-        }
-        .option-btn.correct {
-            background: #38c172 !important;
-            color: #fff !important;
-            border: 1.5px solid #38c172 !important;
-        }
-        .option-btn.incorrect {
-            background: #e3342f !important;
-            color: #fff !important;
-            border: 1.5px solid #e3342f !important;
-        }
-        .option-btn.unanswered {
-            background: #b8c2cc !important;
-            color: #fff !important;
-            border: 1.5px solid #b8c2cc !important;
-        }
-        .exercise-actions {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            margin-top: 10px;
-        }
-        .ask-ai-btn {
-            background: #fff;
-            color: #764ba2;
-            border: 1.5px solid #764ba2;
-            border-radius: 5px;
-            padding: 6px 16px;
-            font-size: 14px;
-            font-weight: 500;
-            margin-left: 18px;
-            cursor: pointer;
-            transition: background 0.2s, color 0.2s;
-        }
-        .ask-ai-btn:hover {
-            background: #764ba2;
-            color: #fff;
-        }
-        .check-btn {
-            margin: 32px auto 0 auto;
-            display: block;
-            background: #667eea;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            padding: 12px 36px;
-            font-size: 17px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .check-btn:hover {
-            background: #764ba2;
-        }
-        .option-btn {
-            margin-right: 8px;
-            margin-bottom: 8px;
-        }
-        .feedback-label {
-            font-weight: 600;
-            margin-left: 16px;
-            font-size: 15px;
-        }
+        .option-btn.selected { background: #667eea; color: #fff; border: 1.5px solid #667eea; }
+        .option-btn.correct { background: #38c172 !important; color: #fff !important; border: 1.5px solid #38c172 !important; }
+        .option-btn.incorrect { background: #e3342f !important; color: #fff !important; border: 1.5px solid #e3342f !important; }
+        .option-btn.unanswered { background: #b8c2cc !important; color: #fff !important; border: 1.5px solid #b8c2cc !important; }
+        .exercise-actions { display: flex; align-items: center; justify-content: flex-end; margin-top: 10px; }
+        .ask-ai-btn { background: #fff; color: #48bb78; border: 1.5px solid #48bb78; border-radius: 5px; padding: 6px 16px; font-size: 14px; font-weight: 500; margin-left: 18px; cursor: pointer; transition: background 0.2s, color 0.2s; }
+        .ask-ai-btn:hover { background: #48bb78; color: #fff; }
+        .check-btn { margin: 32px auto 0 auto; display: block; background: #48bb78; color: #fff; border: none; border-radius: 5px; padding: 12px 36px; font-size: 17px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+        .check-btn:hover { background: #38a169; }
+        .option-btn { margin-right: 8px; margin-bottom: 8px; }
+        .feedback-label { font-weight: 600; margin-left: 16px; font-size: 15px; }
         .feedback-label.correct { color: #38c172; }
         .feedback-label.incorrect { color: #e3342f; }
         .feedback-label.unanswered { color: #b8c2cc; }
-        /* Chatbox styles */
-        .chatbox-modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0,0,0,0.25);
-            align-items: center;
-            justify-content: center;
+        .chatbox-modal { 
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0; 
+            top: 0; 
+            width: 100vw; 
+            height: 100vh; 
+            background: rgba(0,0,0,0.25); 
+            align-items: center; 
+            justify-content: center; 
         }
         .chatbox-modal.active {
             display: flex;

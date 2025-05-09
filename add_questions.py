@@ -1,79 +1,95 @@
 # all_questions = []
 
-# # --- Angles ---
-# angles = [
+# # --- Sine ---
+# sin = [
 #     # Easy
-#     {"topic": "Angles", "level": "easy", "question": "What is the measure of a right angle?", "options": ["45°", "90°", "180°", "360°"], "answer": "90°"},
-#     {"topic": "Angles", "level": "easy", "question": "Two angles that add up to 180° are called:", "options": ["Complementary", "Supplementary", "Vertical", "Adjacent"], "answer": "Supplementary"},
-#     {"topic": "Angles", "level": "easy", "question": "If two angles are vertical angles, they are:", "options": ["Complementary", "Supplementary", "Equal", "Adjacent"], "answer": "Equal"},
+#     {"topic": "Sine", "level": "easy", "question": "In a right triangle, sinθ equals:", 
+#      "options": ["opposite/adjacent", "adjacent/hypotenuse", "opposite/hypotenuse", "hypotenuse/opposite"], 
+#      "answer": "opposite/hypotenuse"},
+#     {"topic": "Sine", "level": "easy", "question": "What is sin30°?", 
+#      "options": ["0", "0.5", "√3/2", "1"], "answer": "0.5"},
+#     {"topic": "Sine", "level": "easy", "question": "If opposite side = 4 and hypotenuse = 8, sinθ = ?", 
+#      "options": ["0.25", "0.5", "0.75", "1"], "answer": "0.5"},
 #     # Medium
-#     {"topic": "Angles", "level": "medium", "question": "In a triangle, the sum of all interior angles is:", "options": ["90°", "180°", "270°", "360°"], "answer": "180°"},
-#     {"topic": "Angles", "level": "medium", "question": "Find angle x if two supplementary angles are x and 110°", "options": ["60°", "70°", "80°", "90°"], "answer": "70°"},
+#     {"topic": "Sine", "level": "medium", "question": "What is sin150°?", 
+#      "options": ["0.5", "-0.5", "√3/2", "-√3/2"], "answer": "0.5"},
+#     {"topic": "Sine", "level": "medium", "question": "In which quadrant is sine positive and cosine negative?", 
+#      "options": ["I", "II", "III", "IV"], "answer": "II"},
 #     # Hard
-#     {"topic": "Angles", "level": "hard", "question": "In a pentagon, what is the sum of interior angles?", "options": ["360°", "540°", "720°", "900°"], "answer": "540°"}
+#     {"topic": "Sine", "level": "hard", "question": "Using sine addition formula, sin(A+B) = ?", 
+#      "options": ["sinAcosB + cosAsinB", "sinAcosB - cosAsinB", "cosAcosB - sinAsinB", "cosAcosB + sinAsinB"], 
+#      "answer": "sinAcosB + cosAsinB"}
 # ]
 
-# # --- Triangles ---
-# triangles = [
+# # --- Cosine ---
+# cos = [
 #     # Easy
-#     {"topic": "Triangles", "level": "easy", "question": "How many sides does a triangle have?", "options": ["2", "3", "4", "5"], "answer": "3"},
-#     {"topic": "Triangles", "level": "easy", "question": "A triangle with all sides equal is:", "options": ["Scalene", "Isosceles", "Equilateral", "Right"], "answer": "Equilateral"},
-#     {"topic": "Triangles", "level": "easy", "question": "In a right triangle, the longest side is called:", "options": ["Base", "Height", "Hypotenuse", "Diagonal"], "answer": "Hypotenuse"},
+#     {"topic": "Cosine", "level": "easy", "question": "cosθ in right triangle is:", 
+#      "options": ["opposite/adjacent", "adjacent/hypotenuse", "opposite/hypotenuse", "hypotenuse/adjacent"], 
+#      "answer": "adjacent/hypotenuse"},
+#     {"topic": "Cosine", "level": "easy", "question": "What is cos60°?", 
+#      "options": ["0", "0.5", "√3/2", "1"], "answer": "0.5"},
+#     {"topic": "Cosine", "level": "easy", "question": "If adjacent = 3 and hypotenuse = 5, cosθ = ?", 
+#      "options": ["0.6", "0.8", "1.2", "1.6"], "answer": "0.6"},
 #     # Medium
-#     {"topic": "Triangles", "level": "medium", "question": "In a right triangle with legs 3 and 4, hypotenuse is:", "options": ["5", "6", "7", "8"], "answer": "5"},
-#     {"topic": "Triangles", "level": "medium", "question": "What triangle has angles 45°, 45°, 90°?", "options": ["Scalene", "Equilateral", "Isosceles Right", "Obtuse"], "answer": "Isosceles Right"},
+#     {"topic": "Cosine", "level": "medium", "question": "What is cos120°?", 
+#      "options": ["0.5", "-0.5", "√3/2", "-√3/2"], "answer": "-0.5"},
+#     {"topic": "Cosine", "level": "medium", "question": "Law of Cosines formula is:", 
+#      "options": ["a² = b² + c²", "a² = b² + c² - 2bc", "a² = b² + c² - 2bc cosA", "a² = b² + c² + 2bc cosA"], 
+#      "answer": "a² = b² + c² - 2bc cosA"},
 #     # Hard
-#     {"topic": "Triangles", "level": "hard", "question": "In ΔABC, angle A=30°, angle B=60°, this is a ______ triangle", "options": ["Acute", "Obtuse", "Right", "Equilateral"], "answer": "Right"}
+#     {"topic": "Cosine", "level": "hard", "question": "Find side c using Law of Cosines: a=5, b=7, angle C=60°", 
+#      "options": ["√39", "6", "7", "8"], "answer": "√39"}
 # ]
 
-# # --- Quadrilaterals ---
-# quadrilaterals = [
+# # --- Tangent ---
+# tan = [
 #     # Easy
-#     {"topic": "Quadrilaterals", "level": "easy", "question": "How many sides does a quadrilateral have?", "options": ["3", "4", "5", "6"], "answer": "4"},
-#     {"topic": "Quadrilaterals", "level": "easy", "question": "A quadrilateral with all right angles is a:", "options": ["Rhombus", "Rectangle", "Trapezoid", "Parallelogram"], "answer": "Rectangle"},
-#     {"topic": "Quadrilaterals", "level": "easy", "question": "All sides equal but angles not 90° - this is a:", "options": ["Square", "Rectangle", "Rhombus", "Trapezoid"], "answer": "Rhombus"},
+#     {"topic": "Tangent", "level": "easy", "question": "tanθ equals:", 
+#      "options": ["sinθ/cosθ", "cosθ/sinθ", "1/sinθ", "1/cosθ"], "answer": "sinθ/cosθ"},
+#     {"topic": "Tangent", "level": "easy", "question": "What is tan45°?", 
+#      "options": ["0", "1", "√3", "undefined"], "answer": "1"},
+#     {"topic": "Tangent", "level": "easy", "question": "If opposite=6 and adjacent=2, tanθ = ?", 
+#      "options": ["1/3", "3", "4", "8"], "answer": "3"},
 #     # Medium
-#     {"topic": "Quadrilaterals", "level": "medium", "question": "In a parallelogram, opposite angles are:", "options": ["Equal", "Supplementary", "Complementary", "90°"], "answer": "Equal"},
-#     {"topic": "Quadrilaterals", "level": "medium", "question": "What quadrilateral has exactly one pair of parallel sides?", "options": ["Parallelogram", "Rhombus", "Trapezoid", "Kite"], "answer": "Trapezoid"},
+#     {"topic": "Tangent", "level": "medium", "question": "What is the period of tangent function?", 
+#      "options": ["90°", "180°", "270°", "360°"], "answer": "180°"},
+#     {"topic": "Tangent", "level": "medium", "question": "In which quadrant is tangent positive?", 
+#      "options": ["I only", "I and II", "I and III", "All quadrants"], "answer": "I and III"},
 #     # Hard
-#     {"topic": "Quadrilaterals", "level": "hard", "question": "In a rhombus with diagonals 6cm and 8cm, area is:", "options": ["12cm²", "24cm²", "36cm²", "48cm²"], "answer": "24cm²"}
+#     {"topic": "Tangent", "level": "hard", "question": "Solve: tanx = √3 for 0° ≤ x < 360°", 
+#      "options": ["30°", "60°", "60° and 240°", "30° and 210°"], "answer": "60° and 240°"}
 # ]
 
-# # --- Circle ---
-# circle = [
+# # --- Trigonometric Equations ---
+# trig_equations = [
 #     # Easy
-#     {"topic": "Circle", "level": "easy", "question": "What is the distance from center to edge of circle?", "options": ["Diameter", "Radius", "Chord", "Arc"], "answer": "Radius"},
-#     {"topic": "Circle", "level": "easy", "question": "Circumference formula is:", "options": ["2πr", "πr²", "πd²", "2πd"], "answer": "2πr"},
-#     {"topic": "Circle", "level": "easy", "question": "A line through circle touching two points is:", "options": ["Radius", "Chord", "Sector", "Segment"], "answer": "Chord"},
+#     {"topic": "Trigonometric Equations", "level": "easy", "question": "Solve: sinx = 0.5 (principal solution)", 
+#      "options": ["30°", "45°", "60°", "90°"], "answer": "30°"},
+#     {"topic": "Trigonometric Equations", "level": "easy", "question": "Solve: cosx = 1", 
+#      "options": ["0°", "30°", "45°", "90°"], "answer": "0°"},
+#     {"topic": "Trigonometric Equations", "level": "easy", "question": "Solve: tanx = 1", 
+#      "options": ["30°", "45°", "60°", "90°"], "answer": "45°"},
 #     # Medium
-#     {"topic": "Circle", "level": "medium", "question": "Area of circle with radius 3 units is:", "options": ["6π", "9π", "12π", "18π"], "answer": "9π"},
-#     {"topic": "Circle", "level": "medium", "question": "Central angle of semicircle is:", "options": ["90°", "120°", "180°", "270°"], "answer": "180°"},
+#     {"topic": "Trigonometric Equations", "level": "medium", "question": "Solve: 2sinx - 1 = 0", 
+#      "options": ["30°", "30° and 150°", "60°", "60° and 120°"], "answer": "30° and 150°"},
+#     {"topic": "Trigonometric Equations", "level": "medium", "question": "Solve: cos2x = 0.5", 
+#      "options": ["30°", "60°", "30° and 150°", "30° and 330°"], "answer": "30° and 150°"},
 #     # Hard
-#     {"topic": "Circle", "level": "hard", "question": "Area of sector with radius 5 and 60° central angle is:", "options": ["(25/6)π", "(5/2)π", "(25/3)π", "10π"], "answer": "(25/6)π"}
+#     {"topic": "Trigonometric Equations", "level": "hard", "question": "Solve: 2sin²x - sinx - 1 = 0", 
+#      "options": ["90°", "210°", "270°", "90° and 270°"], "answer": "270°"}
 # ]
 
-# # --- Area of Shapes ---
-# area = [
-#     # Easy
-#     {"topic": "Area of Shapes", "level": "easy", "question": "Area of rectangle with length 5 and width 4?", "options": ["9", "18", "20", "25"], "answer": "20"},
-#     {"topic": "Area of Shapes", "level": "easy", "question": "Area formula for triangle is:", "options": ["base×height", "½base×height", "πr²", "length×width"], "answer": "½base×height"},
-#     {"topic": "Area of Shapes", "level": "easy", "question": "Area of square with side 3cm is:", "options": ["6cm²", "9cm²", "12cm²", "15cm²"], "answer": "9cm²"},
-#     # Medium
-#     {"topic": "Area of Shapes", "level": "medium", "question": "Area of trapezoid with bases 4/6 and height 5 is:", "options": ["20", "25", "30", "50"], "answer": "25"},
-#     {"topic": "Area of Shapes", "level": "medium", "question": "Area of parallelogram with base 7 and height 3 is:", "options": ["10", "15", "21", "28"], "answer": "21"},
-#     # Hard
-#     {"topic": "Area of Shapes", "level": "hard", "question": "Find area of right triangle with legs 5 and 12 units:", "options": ["30", "60", "78", "120"], "answer": "30"}
-# ]
+# # Combine all topics
+# all_questions += sin + cos + tan + trig_equations
 
-# # Combine all geometry topics
-# all_questions += angles + triangles + quadrilaterals + circle + area
 
 # # Insert into MongoDB
 # from pymongo import MongoClient
 
 # client = MongoClient("mongodb+srv://alasylkhh:admin@cluster0.6fmla.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 # questions = client['questions']
-# questions_geometry = questions['geometry']
+# questions_geometry = questions['trigonometry']
 # questions_geometry.insert_many(all_questions)
 
 # print("✅ Successfully inserted 30 questions across 5 Geometry topics into MongoDB!")

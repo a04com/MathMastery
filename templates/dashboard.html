@@ -73,10 +73,23 @@
                     <a href="#" class="see-all">See all</a>
                 </div>
                 <ul class="topic-list">
-                    <li><span class="topic-icon">sin</span> Sine & Cosine <button class="topic-btn">Start</button></li>
-                    <li><span class="topic-icon">tan</span> Tangent <button class="topic-btn">Start</button></li>
-                    <li><span class="topic-icon">&#952;</span> Unit Circle <button class="topic-btn">Start</button></li>
+                    <li><span class="topic-icon">sin</span> <a class="topic-link" href="{{ url_for('trigonometry_topic', topic='Sine') }}">Sine</a> <button class="topic-btn">Start</button></li>
+                    <li><span class="topic-icon">cos</span> <a class="topic-link" href="{{ url_for('trigonometry_topic', topic='Cosine') }}">Cosine</a> <button class="topic-btn">Start</button></li>
+                    <li><span class="topic-icon">tan</span> <a class="topic-link" href="{{ url_for('trigonometry_topic', topic='Tangent') }}">Tangent</a> <button class="topic-btn">Start</button></li>
+                    <li><span class="topic-icon">&#8801;</span> <a class="topic-link" href="{{ url_for('trigonometry_topic', topic='Trigonometric Equations') }}">Trigonometric Equations</a> <button class="topic-btn">Start</button></li>
                 </ul>
+                <div class="trigonometry-progress-chart">
+                    <svg width="110" height="110" viewBox="0 0 110 110">
+                        <circle cx="55" cy="55" r="48" stroke="#e6e6e6" stroke-width="12" fill="none" />
+                        <circle cx="55" cy="55" r="48" stroke="#48bb78" stroke-width="12" fill="none"
+                            stroke-dasharray="{{ 2*3.1416*48 }}"
+                            stroke-dashoffset="{{ (1 - (trigonometry_solved/total_trigonometry if total_trigonometry else 0)) * 2*3.1416*48 }}"
+                            stroke-linecap="round"
+                            transform="rotate(-90 55 55)" />
+                        <text x="55" y="62" text-anchor="middle" font-size="26" fill="#48bb78" font-weight="bold">{{ (trigonometry_solved/total_trigonometry*100)|round(0) if total_trigonometry else 0 }}%</text>
+                    </svg>
+                    <div class="trigonometry-progress-label">{{ trigonometry_solved }} out of {{ total_trigonometry }} solved</div>
+                </div>
             </div>
             <!-- SAT -->
             <div class="section-card">
@@ -117,6 +130,19 @@
         margin-top: 2px;
         font-size: 15px;
         color: #764ba2;
+        font-weight: 500;
+    }
+    .trigonometry-progress-chart {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 18px;
+        margin-bottom: 2px;
+    }
+    .trigonometry-progress-label {
+        margin-top: 2px;
+        font-size: 15px;
+        color: #48bb78;
         font-weight: 500;
     }
     </style>

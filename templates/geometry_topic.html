@@ -20,19 +20,95 @@
         .feedback-label.correct { color: #38c172; }
         .feedback-label.incorrect { color: #e3342f; }
         .feedback-label.unanswered { color: #b8c2cc; }
-        .chatbox-modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.25); align-items: center; justify-content: center; }
-        .chatbox-modal.active { display: flex; }
-        .chatbox { background: #fff; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.18); width: 400px; max-width: 95vw; min-height: 320px; display: flex; flex-direction: column; padding: 0; }
-        .chatbox-header { padding: 16px 20px; border-bottom: 1px solid #eee; font-weight: 600; font-size: 18px; display: flex; justify-content: space-between; align-items: center; }
-        .chatbox-close { background: none; border: none; font-size: 22px; color: #764ba2; cursor: pointer; }
-        .chatbox-messages { flex: 1; padding: 16px 20px; overflow-y: auto; font-size: 15px; }
-        .chatbox-input-row { display: flex; border-top: 1px solid #eee; padding: 12px 16px; gap: 8px; }
-        .chatbox-input { flex: 1; border: 1px solid #ddd; border-radius: 6px; padding: 8px 12px; font-size: 15px; }
-        .chatbox-send { background: #667eea; color: #fff; border: none; border-radius: 6px; padding: 8px 18px; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
-        .chatbox-send:hover { background: #764ba2; }
-        .chat-msg-user { color: #333; margin-bottom: 8px; }
-        .chat-msg-ai { color: #764ba2; margin-bottom: 12px; white-space: pre-line; }
-        .chatbox-loading { color: #aaa; font-style: italic; }
+        .chatbox-modal { 
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0; 
+            top: 0; 
+            width: 100vw; 
+            height: 100vh; 
+            background: rgba(0,0,0,0.25); 
+            align-items: center; 
+            justify-content: center; 
+        }
+        .chatbox-modal.active {
+            display: flex;
+        }
+        .chatbox {
+            background: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .chatbox-header {
+            padding: 16px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .chatbox-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #718096;
+        }
+        .chatbox-messages {
+            padding: 16px;
+            overflow-y: auto;
+            flex-grow: 1;
+            max-height: 60vh;
+        }
+        .chatbox-input-row {
+            padding: 16px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            gap: 8px;
+        }
+        .chatbox-input {
+            flex-grow: 1;
+            padding: 8px 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .chatbox-send {
+            background: #48bb78;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .chatbox-send:hover {
+            background: #38a169;
+        }
+        .chat-msg-user, .chat-msg-ai {
+            margin-bottom: 12px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            max-width: 80%;
+        }
+        .chat-msg-user {
+            background: #f3f6fd;
+            margin-left: auto;
+        }
+        .chat-msg-ai {
+            background: #f0fff4;
+            margin-right: auto;
+        }
+        .chatbox-loading {
+            color: #718096;
+            font-style: italic;
+            margin: 8px 0;
+        }
     </style>
 </head>
 <body>
