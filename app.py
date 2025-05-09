@@ -92,9 +92,9 @@ def dashboard():
     algebra_solved = user.get('algebra_solved', 0)
     total_algebra = questions_algebra.count_documents({})
     geometry_solved = user.get('geometry_solved', 0)
-    total_geometry = 30
+    total_geometry = questions_geometry.count_documents({})
     trigonometry_solved = user.get('trigonometry_solved', 0)
-    total_trigonometry = 30
+    total_trigonometry = questions_trigonometry.count_documents({})
     sat_solved = user.get('sat_solved', 0)
     total_sat = questions_sat.count_documents({})
     return render_template('dashboard.html', username=username, algebra_solved=algebra_solved, total_algebra=total_algebra, geometry_solved=geometry_solved, total_geometry=total_geometry, trigonometry_solved=trigonometry_solved, total_trigonometry=total_trigonometry, sat_solved=sat_solved, total_sat=total_sat)
