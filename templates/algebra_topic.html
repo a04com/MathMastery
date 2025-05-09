@@ -11,6 +11,21 @@
             color: #fff;
             border: 1.5px solid #667eea;
         }
+        .option-btn.correct {
+            background: #38c172 !important;
+            color: #fff !important;
+            border: 1.5px solid #38c172 !important;
+        }
+        .option-btn.incorrect {
+            background: #e3342f !important;
+            color: #fff !important;
+            border: 1.5px solid #e3342f !important;
+        }
+        .option-btn.unanswered {
+            background: #b8c2cc !important;
+            color: #fff !important;
+            border: 1.5px solid #b8c2cc !important;
+        }
         .exercise-actions {
             display: flex;
             align-items: center;
@@ -53,6 +68,14 @@
             margin-right: 8px;
             margin-bottom: 8px;
         }
+        .feedback-label {
+            font-weight: 600;
+            margin-left: 16px;
+            font-size: 15px;
+        }
+        .feedback-label.correct { color: #38c172; }
+        .feedback-label.incorrect { color: #e3342f; }
+        .feedback-label.unanswered { color: #b8c2cc; }
     </style>
 </head>
 <body>
@@ -65,16 +88,30 @@
             <div class="exercises-list">
                 {% if exercises %}
                     {% for ex in exercises %}
-                        <div class="exercise-card" data-qid="{{ ex['_id'] }}">
+                        {% set qid = ex['_id'] %}
+                        <div class="exercise-card" data-qid="{{ qid }}">
                             <div class="exercise-question">{{ ex['question'] }}</div>
                             <div>
                                 {% for opt in ex['options'] %}
-                                    <button type="button" class="option-btn" data-qid="{{ ex['_id'] }}" data-idx="{{ loop.index0 }}">{{ opt }}</button>
+                                    {% set idx = loop.index0 %}
+                                    {% set selected = request.method == 'POST' and request.form.get('answer_' ~ qid) == idx|string %}
+                                    {% set correct = feedback and feedback[qid|string] == 'correct' and selected and ex['options'][idx] == ex['answer'] %}
+                                    {% set incorrect = feedback and feedback[qid|string] == 'incorrect' and selected %}
+                                    <button type="button" class="option-btn{% if selected %} selected{% endif %}{% if correct %} correct{% elif incorrect %} incorrect{% endif %}" data-qid="{{ qid }}" data-idx="{{ idx }}">{{ opt }}</button>
                                 {% endfor %}
-                                <input type="hidden" name="answer_{{ ex['_id'] }}" id="answer_{{ ex['_id'] }}">
+                                <input type="hidden" name="answer_{{ qid }}" id="answer_{{ qid }}" value="{{ request.form.get('answer_' ~ qid, '') }}">
                             </div>
                             <div class="exercise-actions">
                                 <button type="button" class="ask-ai-btn">Ask AI</button>
+                                {% if feedback %}
+                                    {% if feedback[qid|string] == 'correct' %}
+                                        <span class="feedback-label correct">Correct!</span>
+                                    {% elif feedback[qid|string] == 'incorrect' %}
+                                        <span class="feedback-label incorrect">Incorrect</span>
+                                    {% elif feedback[qid|string] == 'unanswered' %}
+                                        <span class="feedback-label unanswered">Unanswered</span>
+                                    {% endif %}
+                                {% endif %}
                             </div>
                         </div>
                     {% endfor %}

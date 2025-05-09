@@ -71,10 +71,23 @@ def signout():
     session.pop('username', None)
     return redirect(url_for('signin'))
 
-@app.route('/algebra/<topic>')
+@app.route('/algebra/<topic>', methods=['GET', 'POST'])
 def algebra_topic(topic):
     exercises = list(questions_algebra.find({'topic': topic}))
-    return render_template('algebra_topic.html', topic=topic, exercises=exercises)
+    feedback = {}
+    if request.method == 'POST':
+        for ex in exercises:
+            user_answer_idx = request.form.get(f'answer_{ex["_id"]}')
+            if user_answer_idx is not None:
+                try:
+                    user_answer_idx = int(user_answer_idx)
+                    is_correct = ex['options'][user_answer_idx] == ex['answer']
+                    feedback[str(ex['_id'])] = 'correct' if is_correct else 'incorrect'
+                except Exception:
+                    feedback[str(ex['_id'])] = 'incorrect'
+            else:
+                feedback[str(ex['_id'])] = 'unanswered'
+    return render_template('algebra_topic.html', topic=topic, exercises=exercises, feedback=feedback)
 
 if __name__ == '__main__':
     app.run(debug=True)
