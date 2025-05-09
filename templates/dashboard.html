@@ -20,12 +20,12 @@
                     <a href="#" class="see-all">See all</a>
                 </div>
                 <ul class="topic-list">
-                    <li><span class="topic-icon">&#8721;</span> <a class="topic-link" href="{{ url_for('algebra_topic', topic='Variables') }}">Variables</a> <button class="topic-btn">Start</button></li>
-                    <li><span class="topic-icon">&#120121;</span> <a class="topic-link" href="{{ url_for('algebra_topic', topic='Equations') }}">Equations</a> <button class="topic-btn">Start</button></li>
-                    <li><span class="topic-icon">&#120123;</span> <a class="topic-link" href="{{ url_for('algebra_topic', topic='Functions') }}">Functions</a> <button class="topic-btn">Start</button></li>
-                    <li><span class="topic-icon">&#8804;</span> <a class="topic-link" href="{{ url_for('algebra_topic', topic='Inequalities') }}">Inequalities</a> <button class="topic-btn">Start</button></li>
-                    <li><span class="topic-icon">&#120130;</span> <a class="topic-link" href="{{ url_for('algebra_topic', topic='Quadratics') }}">Quadratics</a> <button class="topic-btn">Start</button></li>
-                    <li><span class="topic-icon">&#8756;</span> <a class="topic-link" href="{{ url_for('algebra_topic', topic='Systems') }}">Systems</a> <button class="topic-btn">Start</button></li>
+                    <li><span class="topic-icon">&#8721;</span> <a class="topic-link" href="{{ url_for('algebra_topic', topic='Variables') }}">Variables</a> <a href="{{ url_for('algebra_topic', topic='Variables') }}" class="topic-btn">Start</a></li>
+                    <li><span class="topic-icon">&#120121;</span> <a class="topic-link" href="{{ url_for('algebra_topic', topic='Equations') }}">Equations</a> <a href="{{ url_for('algebra_topic', topic='Equations') }}" class="topic-btn">Start</a></li>
+                    <li><span class="topic-icon">&#120123;</span> <a class="topic-link" href="{{ url_for('algebra_topic', topic='Functions') }}">Functions</a> <a href="{{ url_for('algebra_topic', topic='Functions') }}" class="topic-btn">Start</a></li>
+                    <li><span class="topic-icon">&#8804;</span> <a class="topic-link" href="{{ url_for('algebra_topic', topic='Inequalities') }}">Inequalities</a> <a href="{{ url_for('algebra_topic', topic='Inequalities') }}" class="topic-btn">Start</a></li>
+                    <li><span class="topic-icon">&#120130;</span> <a class="topic-link" href="{{ url_for('algebra_topic', topic='Quadratics') }}">Quadratics</a> <a href="{{ url_for('algebra_topic', topic='Quadratics') }}" class="topic-btn">Start</a></li>
+                    <li><span class="topic-icon">&#8756;</span> <a class="topic-link" href="{{ url_for('algebra_topic', topic='Systems') }}">Systems</a> <a href="{{ url_for('algebra_topic', topic='Systems') }}" class="topic-btn">Start</a></li>
                 </ul>
                 <div class="algebra-progress-chart">
                     <svg width="110" height="110" viewBox="0 0 110 110">
@@ -47,11 +47,11 @@
                     <a href="#" class="see-all">See all</a>
                 </div>
                 <ul class="topic-list">
-                    <li><span class="topic-icon">&#8736;</span> <a class="topic-link" href="{{ url_for('geometry_topic', topic='Angles') }}">Angles</a> <button class="topic-btn">Start</button></li>
-                    <li><span class="topic-icon">&#9651;</span> <a class="topic-link" href="{{ url_for('geometry_topic', topic='Triangles') }}">Triangles</a> <button class="topic-btn">Start</button></li>
-                    <li><span class="topic-icon">&#9632;</span> <a class="topic-link" href="{{ url_for('geometry_topic', topic='Quadrilaterals') }}">Quadrilaterals</a> <button class="topic-btn">Start</button></li>
-                    <li><span class="topic-icon">&#9675;</span> <a class="topic-link" href="{{ url_for('geometry_topic', topic='Circle') }}">Circle</a> <button class="topic-btn">Start</button></li>
-                    <li><span class="topic-icon">&#9642;</span> <a class="topic-link" href="{{ url_for('geometry_topic', topic='Area') }}">Area</a> <button class="topic-btn">Start</button></li>
+                    <li><span class="topic-icon">&#8736;</span> <a class="topic-link" href="{{ url_for('geometry_topic', topic='Angles') }}">Angles</a> <a href="{{ url_for('geometry_topic', topic='Angles') }}" class="topic-btn">Start</a></li>
+                    <li><span class="topic-icon">&#9651;</span> <a class="topic-link" href="{{ url_for('geometry_topic', topic='Triangles') }}">Triangles</a> <a href="{{ url_for('geometry_topic', topic='Triangles') }}" class="topic-btn">Start</a></li>
+                    <li><span class="topic-icon">&#9632;</span> <a class="topic-link" href="{{ url_for('geometry_topic', topic='Quadrilaterals') }}">Quadrilaterals</a> <a href="{{ url_for('geometry_topic', topic='Quadrilaterals') }}" class="topic-btn">Start</a></li>
+                    <li><span class="topic-icon">&#9675;</span> <a class="topic-link" href="{{ url_for('geometry_topic', topic='Circle') }}">Circle</a> <a href="{{ url_for('geometry_topic', topic='Circle') }}" class="topic-btn">Start</a></li>
+                    <li><span class="topic-icon">&#9642;</span> <a class="topic-link" href="{{ url_for('geometry_topic', topic='Area') }}">Area</a> <a href="{{ url_for('geometry_topic', topic='Area') }}" class="topic-btn">Start</a></li>
                 </ul>
                 <div class="geometry-progress-chart">
                     <svg width="110" height="110" viewBox="0 0 110 110">
@@ -73,10 +73,10 @@
                     <a href="#" class="see-all">See all</a>
                 </div>
                 <ul class="topic-list">
-                    <li><span class="topic-icon">sin</span> <a class="topic-link" href="{{ url_for('trigonometry_topic', topic='Sine') }}">Sine</a> <button class="topic-btn">Start</button></li>
-                    <li><span class="topic-icon">cos</span> <a class="topic-link" href="{{ url_for('trigonometry_topic', topic='Cosine') }}">Cosine</a> <button class="topic-btn">Start</button></li>
-                    <li><span class="topic-icon">tan</span> <a class="topic-link" href="{{ url_for('trigonometry_topic', topic='Tangent') }}">Tangent</a> <button class="topic-btn">Start</button></li>
-                    <li><span class="topic-icon">&#8801;</span> <a class="topic-link" href="{{ url_for('trigonometry_topic', topic='Trigonometric Equations') }}">Trigonometric Equations</a> <button class="topic-btn">Start</button></li>
+                    <li><span class="topic-icon">sin</span> <a class="topic-link" href="{{ url_for('trigonometry_topic', topic='Sine') }}">Sine</a> <a href="{{ url_for('trigonometry_topic', topic='Sine') }}" class="topic-btn">Start</a></li>
+                    <li><span class="topic-icon">cos</span> <a class="topic-link" href="{{ url_for('trigonometry_topic', topic='Cosine') }}">Cosine</a> <a href="{{ url_for('trigonometry_topic', topic='Cosine') }}" class="topic-btn">Start</a></li>
+                    <li><span class="topic-icon">tan</span> <a class="topic-link" href="{{ url_for('trigonometry_topic', topic='Tangent') }}">Tangent</a> <a href="{{ url_for('trigonometry_topic', topic='Tangent') }}" class="topic-btn">Start</a></li>
+                    <li><span class="topic-icon">&#8801;</span> <a class="topic-link" href="{{ url_for('trigonometry_topic', topic='Trigonometric Equations') }}">Trigonometric Equations</a> <a href="{{ url_for('trigonometry_topic', topic='Trigonometric Equations') }}" class="topic-btn">Start</a></li>
                 </ul>
                 <div class="trigonometry-progress-chart">
                     <svg width="110" height="110" viewBox="0 0 110 110">
@@ -98,9 +98,9 @@
                     <a href="#" class="see-all">See all</a>
                 </div>
                 <ul class="topic-list">
-                    <li><span class="topic-icon">&#9733;</span> <a class="topic-link" href="{{ url_for('sat_topic', topic='Test 1') }}">Test 1</a> <button class="topic-btn">Start</button></li>
-                    <li><span class="topic-icon">&#9733;</span> <a class="topic-link" href="{{ url_for('sat_topic', topic='Test 2') }}">Test 2</a> <button class="topic-btn">Start</button></li>
-                    <li><span class="topic-icon">&#9733;</span> <a class="topic-link" href="{{ url_for('sat_topic', topic='Test 3') }}">Test 3</a> <button class="topic-btn">Start</button></li>
+                    <li><span class="topic-icon">&#9733;</span> <a class="topic-link" href="{{ url_for('sat_topic', topic='Test 1') }}">Test 1</a> <a href="{{ url_for('sat_topic', topic='Test 1') }}" class="topic-btn">Start</a></li>
+                    <li><span class="topic-icon">&#9733;</span> <a class="topic-link" href="{{ url_for('sat_topic', topic='Test 2') }}">Test 2</a> <a href="{{ url_for('sat_topic', topic='Test 2') }}" class="topic-btn">Start</a></li>
+                    <li><span class="topic-icon">&#9733;</span> <a class="topic-link" href="{{ url_for('sat_topic', topic='Test 3') }}">Test 3</a> <a href="{{ url_for('sat_topic', topic='Test 3') }}" class="topic-btn">Start</a></li>
                 </ul>
                 <div class="sat-progress-chart">
                     <svg width="110" height="110" viewBox="0 0 110 110">

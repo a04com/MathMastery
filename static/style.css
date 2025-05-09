@@ -102,8 +102,8 @@ input:focus {
 /* --- Dashboard Grid and Cards (compact) --- */
 .dashboard-container {
     max-width: 900px;
-    margin: 40px auto 0 auto;
-    padding: 0 10px;
+    margin: 60px auto 0 auto;
+    padding: 0 10px 60px 10px;
 }
 
 .dashboard-header {
@@ -129,15 +129,15 @@ input:focus {
 .sections-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 36px;
 }
 
 .section-card {
     background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 8px 32px rgba(80, 80, 120, 0.18), 0 2px 8px rgba(80, 80, 120, 0.12);
-    padding: 32px 28px 24px 28px;
-    margin-bottom: 24px;
+    border-radius: 16px;
+    box-shadow: 0 16px 48px rgba(80, 80, 120, 0.22), 0 4px 16px rgba(80, 80, 120, 0.14);
+    padding: 40px 36px 36px 36px;
+    margin-bottom: 40px;
 }
 
 .section-header {
