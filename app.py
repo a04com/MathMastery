@@ -364,5 +364,42 @@ def admin_delete_exercise():
     else:
         return jsonify({'error': 'Delete failed'}), 400
 
+@app.route('/admin_add_exercise', methods=['POST'])
+def admin_add_exercise():
+    if 'username' not in session:
+        return jsonify({'error': 'Not logged in'}), 401
+    username = session['username']
+    user = users.find_one({'username': username})
+    if not user or user.get('title') != 'admin':
+        return jsonify({'error': 'Access denied'}), 403
+    data = request.json
+    course = data.get('course')
+    topic = data.get('topic')
+    question = data.get('question')
+    options = data.get('options')
+    answer = data.get('answer')
+    if not (course and topic and question and options and answer):
+        return jsonify({'error': 'Missing fields'}), 400
+    collection_map = {
+        'Algebra': questions_algebra,
+        'Geometry': questions_geometry,
+        'Trigonometry': questions_trigonometry,
+        'SAT': questions_sat,
+    }
+    collection = collection_map.get(course)
+    if collection is None:
+        return jsonify({'error': 'Invalid course'}), 400
+    new_ex = {
+        'topic': topic,
+        'question': question,
+        'options': options,
+        'answer': answer
+    }
+    result = collection.insert_one(new_ex)
+    if result.inserted_id:
+        return jsonify({'success': True, 'id': str(result.inserted_id)})
+    else:
+        return jsonify({'error': 'Insert failed'}), 400
+
 if __name__ == '__main__':
     app.run(debug=True)

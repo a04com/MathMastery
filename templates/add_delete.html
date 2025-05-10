@@ -48,6 +48,26 @@
             <button class="admin-btn" onclick="addExercise()">Add Exercise</button>
         </div>
     </div>
+    <!-- Add Exercise Modal -->
+    <div id="add-exercise-modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.25);z-index:1000;align-items:center;justify-content:center;">
+        <div style="background:#fff;padding:32px 28px;border-radius:10px;max-width:400px;width:90%;box-shadow:0 8px 32px rgba(80,80,120,0.18);position:relative;">
+            <span style="position:absolute;top:10px;right:18px;font-size:22px;cursor:pointer;" onclick="closeAddExerciseModal()">&times;</span>
+            <h3 style="margin-bottom:18px;">Add New Exercise</h3>
+            <div style="margin-bottom:12px;">
+                <label>Question:</label><br>
+                <input type="text" id="add-ex-q" style="width:100%;padding:6px 10px;">
+            </div>
+            <div style="margin-bottom:12px;">
+                <label>Options (comma separated):</label><br>
+                <input type="text" id="add-ex-options" style="width:100%;padding:6px 10px;">
+            </div>
+            <div style="margin-bottom:18px;">
+                <label>Answer:</label><br>
+                <input type="text" id="add-ex-answer" style="width:100%;padding:6px 10px;">
+            </div>
+            <button class="admin-btn" onclick="submitAddExercise()">Add</button>
+        </div>
+    </div>
     <script>
         // Assign as a string, then parse
         const courseTopics = JSON.parse('{{ course_topics|tojson|safe }}');
@@ -105,7 +125,39 @@
                 });
         }
         function addExercise() {
-            alert('Add Exercise functionality coming soon!');
+            document.getElementById('add-exercise-modal').style.display = 'flex';
+            document.getElementById('add-ex-q').value = '';
+            document.getElementById('add-ex-options').value = '';
+            document.getElementById('add-ex-answer').value = '';
+        }
+        function closeAddExerciseModal() {
+            document.getElementById('add-exercise-modal').style.display = 'none';
+        }
+        function submitAddExercise() {
+            const course = document.getElementById('course-select').value;
+            const topic = document.getElementById('selected-topic').textContent;
+            const question = document.getElementById('add-ex-q').value.trim();
+            const options = document.getElementById('add-ex-options').value.split(',').map(s => s.trim()).filter(Boolean);
+            const answer = document.getElementById('add-ex-answer').value.trim();
+            if (!course || !topic || !question || !options.length || !answer) {
+                alert('Please fill in all fields.');
+                return;
+            }
+            fetch('/admin_add_exercise', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'same-origin',
+                body: JSON.stringify({ course, topic, question, options, answer })
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    closeAddExerciseModal();
+                    editTopic(course, topic);
+                } else {
+                    alert(data.error || 'Add failed');
+                }
+            });
         }
         function saveExercise(course, ex_id, topic) {
             const question = document.getElementById(`q_${ex_id}__question`).value;
