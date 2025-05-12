@@ -6,12 +6,14 @@
     <title>Admin: Add/Delete/Edit Exercises</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
-        body { background: linear-gradient( 135deg, #f9c823, #fc506e ); min-height: 100vh; margin: 0; font-family: sans-serif; }
-        .admin-container { max-width: 900px; margin: 40px auto; background: #fff; border-radius: 12px; box-shadow: 0 8px 32px rgba(80,80,120,0.12); padding: 36px; }
-        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-        .admin-title { font-size: 2rem; font-weight: 700; color: #222; }
+        body { background: linear-gradient(135deg, #f9c823, #fc506e); min-height: 100vh; margin: 0; font-family: sans-serif; }
+        .admin-container { max-width: 900px; margin: 40px auto; background: #fff; border-radius: 16px; box-shadow: 0 8px 32px rgba(80,80,120,0.14); padding: 40px 36px; }
+        .admin-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; }
+        .admin-title { font-size: 2.2rem; font-weight: 800; color: #222; line-height: 1.1; letter-spacing: -1px; }
+        .admin-back-btn { background: #667eea; color: #fff; border: none; border-radius: 6px; font-size: 15px; font-weight: 500; padding: 10px 32px; margin-left: 24px; margin-top: 6px; box-shadow: 0 2px 8px rgba(80,80,120,0.08); transition: background 0.2s, box-shadow 0.2s; text-decoration: none; display: inline-block; white-space: nowrap; }
+        .admin-back-btn:hover { background: #4c51bf; box-shadow: 0 4px 16px rgba(80,80,120,0.13); }
         .admin-section { margin-bottom: 32px; }
-        .admin-label { font-weight: 600; margin-bottom: 8px; display: block; }
+        .admin-label { font-weight: 600; margin-bottom: 8px; display: block; font-size: 16px; }
         .admin-select, .admin-btn { padding: 8px 16px; border-radius: 5px; border: 1px solid #ddd; font-size: 16px; margin-bottom: 12px; }
         .admin-btn { background: #48bb78; color: #fff; border: none; font-weight: 500; margin-left: 8px; cursor: pointer; transition: background 0.2s; }
         .admin-btn:hover { background: #276749; }
@@ -26,47 +28,47 @@
 <body>
     <div class="admin-container">
         <div class="admin-header">
-            <span class="admin-title">Admin: Add/Delete/Edit Exercises</span>
-            <a href="{{ url_for('dashboard') }}" class="btn">Back to Dashboard</a>
+            <span class="admin-title">Добавить/Удалить/Редактировать упражнения</span>
+            <a href="{{ url_for('dashboard') }}" class="admin-back-btn">Назад к панели</a>
         </div>
         <div class="admin-section">
-            <label class="admin-label" for="course-select">Choose a course:</label>
+            <label class="admin-label" for="course-select">Выберите:</label>
             <select id="course-select" class="admin-select" onchange="showTopics()">
-                <option value="">-- Select Course --</option>
+                <option value="">-- Выберите курс --</option>
                 {% for course in courses %}
                     <option value="{{ course.name }}">{{ course.name }}</option>
                 {% endfor %}
             </select>
         </div>
         <div class="admin-section" id="topics-section" style="display:none;">
-            <label class="admin-label">Topics in <span id="selected-course"></span>:</label>
+            <label class="admin-label">Темы в <span id="selected-course"></span>:</label>
             <div class="topic-list" id="topic-list"></div>
-            <button class="admin-btn" onclick="addTopic()">Add Topic</button>
+            <button class="admin-btn" onclick="addTopic()">Добавить тему</button>
         </div>
         <div class="admin-section" id="exercises-section" style="display:none;">
-            <label class="admin-label">Exercises in <span id="selected-topic"></span>:</label>
+            <label class="admin-label">Упражнения в <span id="selected-topic"></span>:</label>
             <div class="exercise-list" id="exercise-list"></div>
-            <button class="admin-btn" onclick="addExercise()">Add Exercise</button>
+            <button class="admin-btn" onclick="addExercise()">Добавить упражнение</button>
         </div>
     </div>
     <!-- Add Exercise Modal -->
     <div id="add-exercise-modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.25);z-index:1000;align-items:center;justify-content:center;">
         <div style="background:#fff;padding:32px 28px;border-radius:10px;max-width:400px;width:90%;box-shadow:0 8px 32px rgba(80,80,120,0.18);position:relative;">
             <span style="position:absolute;top:10px;right:18px;font-size:22px;cursor:pointer;" onclick="closeAddExerciseModal()">&times;</span>
-            <h3 style="margin-bottom:18px;">Add New Exercise</h3>
+            <h3 style="margin-bottom:18px;">Добавить новое упражнение</h3>
             <div style="margin-bottom:12px;">
-                <label>Question:</label><br>
+                <label>Вопрос:</label><br>
                 <input type="text" id="add-ex-q" style="width:100%;padding:6px 10px;">
             </div>
             <div style="margin-bottom:12px;">
-                <label>Options (comma separated):</label><br>
+                <label>Варианты ответа (через запятую):</label><br>
                 <input type="text" id="add-ex-options" style="width:100%;padding:6px 10px;">
             </div>
             <div style="margin-bottom:18px;">
-                <label>Answer:</label><br>
+                <label>Ответ:</label><br>
                 <input type="text" id="add-ex-answer" style="width:100%;padding:6px 10px;">
             </div>
-            <button class="admin-btn" onclick="submitAddExercise()">Add</button>
+            <button class="admin-btn" onclick="submitAddExercise()">Добавить</button>
         </div>
     </div>
     <script>
