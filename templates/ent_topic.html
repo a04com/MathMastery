@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ topic }} - SAT Exercises</title>
+    <title>{{ topic }} - ЕНТ</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
         .option-btn.selected { background: #667eea; color: #fff; border: 1.5px solid #667eea; }
@@ -39,8 +39,8 @@
 <body>
     <div class="container dashboard-container">
         <div class="dashboard-header">
-            <h2>{{ topic }} Exercises</h2>
-            <a href="{{ url_for('dashboard') }}" class="btn signout-btn">Back to Dashboard</a>
+            <h2>ЕНТ - {{ topic }}</h2>
+            <a href="{{ url_for('dashboard') }}" class="btn signout-btn">Назад к панели управления</a>
         </div>
         <form method="POST" action="">
             <div class="exercises-list">
@@ -60,37 +60,37 @@
                                 <input type="hidden" name="answer_{{ qid }}" id="answer_{{ qid }}" value="{{ request.form.get('answer_' ~ qid, '') }}">
                             </div>
                             <div class="exercise-actions">
-                                <button type="button" class="ask-ai-btn" data-exercise="{{ ex['question']|e }}">Ask AI</button>
+                                <button type="button" class="ask-ai-btn" data-exercise="{{ ex['question']|e }}">Спросить ИИ</button>
                                 {% if feedback %}
                                     {% if feedback[qid|string] == 'correct' %}
-                                        <span class="feedback-label correct">Correct!</span>
+                                        <span class="feedback-label correct">Правильно!</span>
                                     {% elif feedback[qid|string] == 'incorrect' %}
-                                        <span class="feedback-label incorrect">Incorrect</span>
+                                        <span class="feedback-label incorrect">Неправильно</span>
                                     {% elif feedback[qid|string] == 'unanswered' %}
-                                        <span class="feedback-label unanswered">Unanswered</span>
+                                        <span class="feedback-label unanswered">Не отвечено</span>
                                     {% endif %}
                                 {% endif %}
                             </div>
                         </div>
                     {% endfor %}
                 {% else %}
-                    <p>No exercises found for this topic.</p>
+                    <p>Нет доступных упражнений для этой темы.</p>
                 {% endif %}
             </div>
-            <button type="submit" class="check-btn">Check</button>
+            <button type="submit" class="check-btn">Проверить</button>
         </form>
     </div>
     <!-- Chatbox Modal -->
     <div class="chatbox-modal" id="chatbox-modal">
         <div class="chatbox">
             <div class="chatbox-header">
-                <span>Ask AI about this exercise</span>
+                <span>Спросить ИИ о задании</span>
                 <button class="chatbox-close" id="chatbox-close">&times;</button>
             </div>
             <div class="chatbox-messages" id="chatbox-messages"></div>
             <div class="chatbox-input-row">
-                <input type="text" class="chatbox-input" id="chatbox-input" placeholder="Type your question...">
-                <button class="chatbox-send" id="chatbox-send">Send</button>
+                <input type="text" class="chatbox-input" id="chatbox-input" placeholder="Введите ваш вопрос...">
+                <button class="chatbox-send" id="chatbox-send">Отправить</button>
             </div>
         </div>
     </div>
@@ -130,9 +130,9 @@
             const msg = input.value.trim();
             if (!msg) return;
             const messagesDiv = document.getElementById('chatbox-messages');
-            messagesDiv.innerHTML += `<div class='chat-msg-user'><b>You:</b> ${msg}</div>`;
+            messagesDiv.innerHTML += `<div class='chat-msg-user'><b>Вы:</b> ${msg}</div>`;
             input.value = '';
-            messagesDiv.innerHTML += `<div class='chatbox-loading'>AI is typing...</div>`;
+            messagesDiv.innerHTML += `<div class='chatbox-loading'>ИИ печатает...</div>`;
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
             fetch('/ask_ai', {
                 method: 'POST',
@@ -142,12 +142,12 @@
             .then(r => r.json())
             .then(data => {
                 document.querySelector('.chatbox-loading').remove();
-                messagesDiv.innerHTML += `<div class='chat-msg-ai'><b>AI:</b> ${data.response}</div>`;
+                messagesDiv.innerHTML += `<div class='chat-msg-ai'><b>ИИ:</b> ${data.response}</div>`;
                 messagesDiv.scrollTop = messagesDiv.scrollHeight;
             })
             .catch(() => {
                 document.querySelector('.chatbox-loading').remove();
-                messagesDiv.innerHTML += `<div class='chat-msg-ai'><b>AI:</b> Sorry, there was an error with the AI service.</div>`;
+                messagesDiv.innerHTML += `<div class='chat-msg-ai'><b>ИИ:</b> Извините, произошла ошибка при обращении к сервису ИИ.</div>`;
                 messagesDiv.scrollTop = messagesDiv.scrollHeight;
             });
         }

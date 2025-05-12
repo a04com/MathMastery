@@ -17,7 +17,7 @@ questions = client['questions']
 questions_algebra = questions['algebra']
 questions_geometry = questions['geometry']
 questions_trigonometry = questions['trigonometry']
-questions_sat = questions['sat']
+questions_ent = questions['ent']
 
 groq_client = Groq(api_key='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')
 
@@ -51,17 +51,18 @@ def signup():
         
         # Check if user already exists
         if users.find_one({'username': username}):
-            flash('Username already exists!')
+            flash('Пользователь с таким именем уже существует!')
             return redirect(url_for('signup'))
         
         # Create new user
         hashed_password = generate_password_hash(password)
         users.insert_one({
             'username': username,
-            'password': hashed_password
+            'password': hashed_password,
+            'language': 'ru'  # Set default language to Russian
         })
         
-        flash('Account created successfully! Please sign in.')
+        flash('Аккаунт успешно создан! Пожалуйста, войдите.')
         return redirect(url_for('signin'))
     
     return render_template('signup.html')
@@ -78,7 +79,7 @@ def signin():
             session['username'] = username
             return redirect(url_for('dashboard'))
         else:
-            flash('Invalid username or password!')
+            flash('Неверное имя пользователя или пароль!')
             return redirect(url_for('signin'))
     
     return render_template('signin.html')
@@ -90,15 +91,16 @@ def dashboard():
     username = session['username']
     user = users.find_one({'username': username})
     title = user.get('title', None)
+    language = user.get('language', 'ru')  # Default to Russian
     algebra_solved = user.get('algebra_solved', 0)
     total_algebra = questions_algebra.count_documents({})
     geometry_solved = user.get('geometry_solved', 0)
     total_geometry = questions_geometry.count_documents({})
     trigonometry_solved = user.get('trigonometry_solved', 0)
     total_trigonometry = questions_trigonometry.count_documents({})
-    sat_solved = user.get('sat_solved', 0)
-    total_sat = questions_sat.count_documents({})
-    return render_template('dashboard.html', username=username, title=title, algebra_solved=algebra_solved, total_algebra=total_algebra, geometry_solved=geometry_solved, total_geometry=total_geometry, trigonometry_solved=trigonometry_solved, total_trigonometry=total_trigonometry, sat_solved=sat_solved, total_sat=total_sat)
+    ent_solved = user.get('ent_solved', 0)
+    total_ent = questions_ent.count_documents({})
+    return render_template('dashboard.html', username=username, title=title, language=language, algebra_solved=algebra_solved, total_algebra=total_algebra, geometry_solved=geometry_solved, total_geometry=total_geometry, trigonometry_solved=trigonometry_solved, total_trigonometry=total_trigonometry, ent_solved=ent_solved, total_ent=total_ent)
 
 @app.route('/signout')
 def signout():
@@ -210,13 +212,13 @@ def trigonometry_topic(topic):
             )
     return render_template('trigonometry_topic.html', topic=topic, exercises=exercises, feedback=feedback)
 
-@app.route('/sat/<topic>', methods=['GET', 'POST'])
-def sat_topic(topic):
-    exercises = list(questions_sat.find({'topic': topic}))
+@app.route('/ent/<topic>', methods=['GET', 'POST'])
+def ent_topic(topic):
+    exercises = list(questions_ent.find({'topic': topic}))
     feedback = {}
     username = session.get('username')
     user = users.find_one({'username': username}) if username else None
-    solved_ids = set(user.get('sat_solved_ids', [])) if user else set()
+    solved_ids = set(user.get('ent_solved_ids', [])) if user else set()
     new_correct = 0
     if request.method == 'POST':
         for ex in exercises:
@@ -241,9 +243,9 @@ def sat_topic(topic):
         if user and new_correct > 0:
             users.update_one(
                 {'_id': user['_id']},
-                {'$set': {'sat_solved_ids': list(solved_ids), 'sat_solved': len(solved_ids)}}
+                {'$set': {'ent_solved_ids': list(solved_ids), 'ent_solved': len(solved_ids)}}
             )
-    return render_template('sat_topic.html', topic=topic, exercises=exercises, feedback=feedback)
+    return render_template('ent_topic.html', topic=topic, exercises=exercises, feedback=feedback)
 
 @app.route('/ask_ai', methods=['POST'])
 def ask_ai():
@@ -263,14 +265,14 @@ def add_delete():
     username = session['username']
     user = users.find_one({'username': username})
     if not user or user.get('title') != 'admin':
-        flash('Access denied.')
+        flash('Доступ запрещен.')
         return redirect(url_for('dashboard'))
     # List of courses and their collections
     courses = [
-        {'name': 'Algebra', 'collection': questions_algebra},
-        {'name': 'Geometry', 'collection': questions_geometry},
-        {'name': 'Trigonometry', 'collection': questions_trigonometry},
-        {'name': 'SAT', 'collection': questions_sat},
+        {'name': 'Алгебра', 'collection': questions_algebra},
+        {'name': 'Геометрия', 'collection': questions_geometry},
+        {'name': 'Тригонометрия', 'collection': questions_trigonometry},
+        {'name': 'ЕНТ', 'collection': questions_ent},
     ]
     # For now, just show the course names and topics
     course_topics = {}
@@ -292,10 +294,10 @@ def admin_get_exercises():
     if not course or not topic:
         return jsonify({'error': 'Missing course or topic'}), 400
     collection_map = {
-        'Algebra': questions_algebra,
-        'Geometry': questions_geometry,
-        'Trigonometry': questions_trigonometry,
-        'SAT': questions_sat,
+        'Алгебра': questions_algebra,
+        'Геометрия': questions_geometry,
+        'Тригонометрия': questions_trigonometry,
+        'ЕНТ': questions_ent,
     }
     collection = collection_map.get(course)
     if collection is None:
@@ -322,10 +324,10 @@ def admin_update_exercise():
     if not (course and ex_id and question and options and answer):
         return jsonify({'error': 'Missing fields'}), 400
     collection_map = {
-        'Algebra': questions_algebra,
-        'Geometry': questions_geometry,
-        'Trigonometry': questions_trigonometry,
-        'SAT': questions_sat,
+        'Алгебра': questions_algebra,
+        'Геометрия': questions_geometry,
+        'Тригонометрия': questions_trigonometry,
+        'ЕНТ': questions_ent,
     }
     collection = collection_map.get(course)
     if collection is None:
@@ -350,10 +352,10 @@ def admin_delete_exercise():
     if not (course and ex_id):
         return jsonify({'error': 'Missing fields'}), 400
     collection_map = {
-        'Algebra': questions_algebra,
-        'Geometry': questions_geometry,
-        'Trigonometry': questions_trigonometry,
-        'SAT': questions_sat,
+        'Алгебра': questions_algebra,
+        'Геометрия': questions_geometry,
+        'Тригонометрия': questions_trigonometry,
+        'ЕНТ': questions_ent,
     }
     collection = collection_map.get(course)
     if collection is None:
@@ -381,10 +383,10 @@ def admin_add_exercise():
     if not (course and topic and question and options and answer):
         return jsonify({'error': 'Missing fields'}), 400
     collection_map = {
-        'Algebra': questions_algebra,
-        'Geometry': questions_geometry,
-        'Trigonometry': questions_trigonometry,
-        'SAT': questions_sat,
+        'Алгебра': questions_algebra,
+        'Геометрия': questions_geometry,
+        'Тригонометрия': questions_trigonometry,
+        'ЕНТ': questions_ent,
     }
     collection = collection_map.get(course)
     if collection is None:

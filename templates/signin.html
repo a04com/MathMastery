@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In</title>
+    <title>Вход</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
         body { background: linear-gradient( 135deg, #f9c823, #fc506e ); min-height: 100vh; margin: 0; font-family: sans-serif; }
@@ -12,7 +12,7 @@
 <body>
     <div class="container">
         <div class="form-box">
-            <h2>Sign In</h2>
+            <h2>Вход</h2>
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
                     {% for message in messages %}
@@ -22,14 +22,14 @@
             {% endwith %}
             <form method="POST" action="{{ url_for('signin') }}">
                 <div class="input-group">
-                    <input type="text" name="username" placeholder="Username" required>
+                    <input type="text" name="username" placeholder="Имя пользователя" required>
                 </div>
                 <div class="input-group">
-                    <input type="password" name="password" placeholder="Password" required>
+                    <input type="password" name="password" placeholder="Пароль" required>
                 </div>
-                <button type="submit" class="btn">Sign In</button>
+                <button type="submit" class="btn">Войти</button>
             </form>
-            <p class="switch-form">Don't have an account? <a href="{{ url_for('signup') }}">Sign Up</a></p>
+            <p class="switch-form">Нет аккаунта? <a href="{{ url_for('signup') }}">Зарегистрироваться</a></p>
         </div>
     </div>
 </body>

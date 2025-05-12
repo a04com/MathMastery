@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
+    <title>Регистрация</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
         body { background: linear-gradient( 135deg, #f9c823, #fc506e ); min-height: 100vh; margin: 0; font-family: sans-serif; }
@@ -12,7 +12,7 @@
 <body>
     <div class="container">
         <div class="form-box">
-            <h2>Sign Up</h2>
+            <h2>Регистрация</h2>
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
                     {% for message in messages %}
@@ -22,14 +22,22 @@
             {% endwith %}
             <form method="POST" action="{{ url_for('signup') }}">
                 <div class="input-group">
-                    <input type="text" name="username" placeholder="Username" required>
+                    <input type="text" name="username" placeholder="Имя пользователя" required>
                 </div>
                 <div class="input-group">
-                    <input type="password" name="password" placeholder="Password" required>
+                    <input type="password" name="password" placeholder="Пароль" required>
                 </div>
-                <button type="submit" class="btn">Sign Up</button>
+                <div class="input-group">
+                    <select name="language" required>
+                        <option value="">Select Language</option>
+                        <option value="en">English</option>
+                        <option value="kk">Kazakh</option>
+                        <option value="ru">Russian</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Зарегистрироваться</button>
             </form>
-            <p class="switch-form">Already have an account? <a href="{{ url_for('signin') }}">Sign In</a></p>
+            <p class="switch-form">Уже есть аккаунт? <a href="{{ url_for('signin') }}">Войти</a></p>
         </div>
     </div>
 </body>
