@@ -89,7 +89,7 @@
             selectedCourse.textContent = course;
             const topics = courseTopics[course] || [];
             topicList.innerHTML = topics.map(function(t) {
-                return `<div class='topic-item'><span class='topic-name'>${t}</span><span class='topic-actions'><a href='#' onclick='editTopic("${course}", "${t}");return false;'>Edit</a><a href='#' onclick='deleteTopic("${course}", "${t}");return false;'>Delete</a></span></div>`;
+                return `<div class='topic-item'><span class='topic-name'>${t}</span><span class='topic-actions'><a href='#' onclick='editTopic("${course}", "${t}");return false;'>Edit</a></span></div>`;
             }).join('');
         }
         function addTopic() {

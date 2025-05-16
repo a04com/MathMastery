@@ -11,12 +11,15 @@
 </head>
 <body>
     <div class="container dashboard-container">
-        <div class="dashboard-header">
+        <div class="dashboard-header" style="display: flex; align-items: center; justify-content: space-between;">
             <h2>Добро пожаловать, {{ username }}{% if title %}, {{ title }}{% endif %}!</h2>
+            <div class="header-btns" style="display: flex; align-items: center; gap: 16px;">
             {% if title == 'admin' %}
                 <a href="{{ url_for('add_delete') }}" class="btn add-delete-btn">Добавить/Удалить</a>
             {% endif %}
+            <a href="{{ url_for('about_us') }}" class="btn signout-btn">О нас</a>
             <a href="{{ url_for('signout') }}" class="btn signout-btn">Выйти</a>
+            </div>
         </div>
         <div class="sections-grid">
             <!-- Алгебра -->
@@ -189,6 +192,8 @@
     .add-delete-btn:hover {
         background: #276749;
     }
+    .about-btn { margin-left: 0 !important; }
+    .header-btns a { margin-left: 0 !important; }
     </style>
 </body>
 </html> 

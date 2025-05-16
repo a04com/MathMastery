@@ -41,7 +41,7 @@ def ask_groq_ai(exercise, user_message):
 def home():
     if 'username' in session:
         return redirect(url_for('dashboard'))
-    return redirect(url_for('signin'))
+    return redirect(url_for('about_us'))
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -402,6 +402,10 @@ def admin_add_exercise():
         return jsonify({'success': True, 'id': str(result.inserted_id)})
     else:
         return jsonify({'error': 'Insert failed'}), 400
+
+@app.route('/about_us')
+def about_us():
+    return render_template('about_us.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
