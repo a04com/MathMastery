@@ -29,12 +29,13 @@
                     <a href="#" class="see-all">Все темы</a>
                 </div>
                 <ul class="topic-list">
-                    <li><span class="topic-icon">&#8721;</span> <a class="topic-link" href="{{ url_for('algebra_topic', topic='Variables') }}">Переменные</a> <a href="{{ url_for('algebra_topic', topic='Variables') }}" class="topic-btn">Начать</a></li>
-                    <li><span class="topic-icon">&#120121;</span> <a class="topic-link" href="{{ url_for('algebra_topic', topic='Equations') }}">Уравнения</a> <a href="{{ url_for('algebra_topic', topic='Equations') }}" class="topic-btn">Начать</a></li>
-                    <li><span class="topic-icon">&#120123;</span> <a class="topic-link" href="{{ url_for('algebra_topic', topic='Functions') }}">Функции</a> <a href="{{ url_for('algebra_topic', topic='Functions') }}" class="topic-btn">Начать</a></li>
-                    <li><span class="topic-icon">&#8804;</span> <a class="topic-link" href="{{ url_for('algebra_topic', topic='Inequalities') }}">Неравенства</a> <a href="{{ url_for('algebra_topic', topic='Inequalities') }}" class="topic-btn">Начать</a></li>
-                    <li><span class="topic-icon">&#120130;</span> <a class="topic-link" href="{{ url_for('algebra_topic', topic='Quadratics') }}">Квадратные уравнения</a> <a href="{{ url_for('algebra_topic', topic='Quadratics') }}" class="topic-btn">Начать</a></li>
-                    <li><span class="topic-icon">&#8756;</span> <a class="topic-link" href="{{ url_for('algebra_topic', topic='Systems') }}">Системы уравнений</a> <a href="{{ url_for('algebra_topic', topic='Systems') }}" class="topic-btn">Начать</a></li>
+                    {% for topic, topic_name in algebra_topics %}
+                        <li>
+                            <span class="topic-icon">&#8721;</span>
+                            <a class="topic-link" href="{{ url_for('algebra_topic', topic=topic) }}">{{ topic_name }}</a>
+                            <a href="{{ url_for('algebra_topic', topic=topic) }}" class="topic-btn">Начать</a>
+                        </li>
+                    {% endfor %}
                 </ul>
                 <div class="algebra-progress-chart">
                     <svg width="110" height="110" viewBox="0 0 110 110">
@@ -56,11 +57,13 @@
                     <a href="#" class="see-all">Все темы</a>
                 </div>
                 <ul class="topic-list">
-                    <li><span class="topic-icon">&#8736;</span> <a class="topic-link" href="{{ url_for('geometry_topic', topic='Angles') }}">Углы</a> <a href="{{ url_for('geometry_topic', topic='Angles') }}" class="topic-btn">Начать</a></li>
-                    <li><span class="topic-icon">&#9651;</span> <a class="topic-link" href="{{ url_for('geometry_topic', topic='Triangles') }}">Треугольники</a> <a href="{{ url_for('geometry_topic', topic='Triangles') }}" class="topic-btn">Начать</a></li>
-                    <li><span class="topic-icon">&#9632;</span> <a class="topic-link" href="{{ url_for('geometry_topic', topic='Quadrilaterals') }}">Четырехугольники</a> <a href="{{ url_for('geometry_topic', topic='Quadrilaterals') }}" class="topic-btn">Начать</a></li>
-                    <li><span class="topic-icon">&#9675;</span> <a class="topic-link" href="{{ url_for('geometry_topic', topic='Circle') }}">Окружность</a> <a href="{{ url_for('geometry_topic', topic='Circle') }}" class="topic-btn">Начать</a></li>
-                    <li><span class="topic-icon">&#9642;</span> <a class="topic-link" href="{{ url_for('geometry_topic', topic='Area') }}">Площадь</a> <a href="{{ url_for('geometry_topic', topic='Area') }}" class="topic-btn">Начать</a></li>
+                    {% for topic, topic_name in geometry_topics %}
+                        <li>
+                            <span class="topic-icon">&#8736;</span>
+                            <a class="topic-link" href="{{ url_for('geometry_topic', topic=topic) }}">{{ topic_name }}</a>
+                            <a href="{{ url_for('geometry_topic', topic=topic) }}" class="topic-btn">Начать</a>
+                        </li>
+                    {% endfor %}
                 </ul>
                 <div class="geometry-progress-chart">
                     <svg width="110" height="110" viewBox="0 0 110 110">
@@ -82,10 +85,13 @@
                     <a href="#" class="see-all">Все темы</a>
                 </div>
                 <ul class="topic-list">
-                    <li><span class="topic-icon">sin</span> <a class="topic-link" href="{{ url_for('trigonometry_topic', topic='Sine') }}">Синус</a> <a href="{{ url_for('trigonometry_topic', topic='Sine') }}" class="topic-btn">Начать</a></li>
-                    <li><span class="topic-icon">cos</span> <a class="topic-link" href="{{ url_for('trigonometry_topic', topic='Cosine') }}">Косинус</a> <a href="{{ url_for('trigonometry_topic', topic='Cosine') }}" class="topic-btn">Начать</a></li>
-                    <li><span class="topic-icon">tan</span> <a class="topic-link" href="{{ url_for('trigonometry_topic', topic='Tangent') }}">Тангенс</a> <a href="{{ url_for('trigonometry_topic', topic='Tangent') }}" class="topic-btn">Начать</a></li>
-                    <li><span class="topic-icon">&#8801;</span> <a class="topic-link" href="{{ url_for('trigonometry_topic', topic='Trigonometric Equations') }}">Тригонометрические уравнения</a> <a href="{{ url_for('trigonometry_topic', topic='Trigonometric Equations') }}" class="topic-btn">Начать</a></li>
+                    {% for topic, topic_name in trigonometry_topics %}
+                        <li>
+                            <span class="topic-icon">sin</span>
+                            <a class="topic-link" href="{{ url_for('trigonometry_topic', topic=topic) }}">{{ topic_name }}</a>
+                            <a href="{{ url_for('trigonometry_topic', topic=topic) }}" class="topic-btn">Начать</a>
+                        </li>
+                    {% endfor %}
                 </ul>
                 <div class="trigonometry-progress-chart">
                     <svg width="110" height="110" viewBox="0 0 110 110">
@@ -107,9 +113,13 @@
                     <a href="#" class="see-all">Все тесты</a>
                 </div>
                 <ul class="topic-list">
-                    <li><span class="topic-icon">&#9733;</span> <a class="topic-link" href="{{ url_for('ent_topic', topic='Test 1') }}">Тест 1</a> <a href="{{ url_for('ent_topic', topic='Test 1') }}" class="topic-btn">Начать</a></li>
-                    <li><span class="topic-icon">&#9733;</span> <a class="topic-link" href="{{ url_for('ent_topic', topic='Test 2') }}">Тест 2</a> <a href="{{ url_for('ent_topic', topic='Test 2') }}" class="topic-btn">Начать</a></li>
-                    <li><span class="topic-icon">&#9733;</span> <a class="topic-link" href="{{ url_for('ent_topic', topic='Test 3') }}">Тест 3</a> <a href="{{ url_for('ent_topic', topic='Test 3') }}" class="topic-btn">Начать</a></li>
+                    {% for topic, topic_name in ent_topics %}
+                        <li>
+                            <span class="topic-icon">&#9733;</span>
+                            <a class="topic-link" href="{{ url_for('ent_topic', topic=topic) }}">{{ topic_name }}</a>
+                            <a href="{{ url_for('ent_topic', topic=topic) }}" class="topic-btn">Начать</a>
+                        </li>
+                    {% endfor %}
                 </ul>
                 <div class="ent-progress-chart">
                     <svg width="110" height="110" viewBox="0 0 110 110">
