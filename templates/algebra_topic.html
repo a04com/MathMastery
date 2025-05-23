@@ -182,7 +182,7 @@
 <body>
     <div class="container dashboard-container">
         <div class="dashboard-header">
-            <h2>{{ topic }} - Алгебра</h2>
+            <h2>{{ exercises[0]['topic_name'] if exercises and 'topic_name' in exercises[0] else topic }} - Алгебра</h2>
             <a href="{{ url_for('dashboard') }}" class="btn signout-btn">Назад к панели</a>
         </div>
         <form method="POST" action="">
