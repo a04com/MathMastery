@@ -32,11 +32,6 @@
 <body>
     <div class="site-wrapper" style="display: flex; flex-direction: column; min-height: 100vh;">
         {% block content %}{% endblock %}
-        {% if request.endpoint not in ['signin', 'signup'] %}
-        <footer class="site-footer">
-            © {{ 2024 }} MathMastery — Все права защищены.
-        </footer>
-        {% endif %}
     </div>
 </body>
 </html> 
