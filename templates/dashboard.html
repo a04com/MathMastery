@@ -79,7 +79,7 @@
 </head>
 <body>
     <div class="dashboard-header-bar">
-        <div class="logotype">MathMastery</div>
+        <a href="{{ url_for('dashboard') }}" style="text-decoration:none;"><div class="logotype">MathMastery</div></a>
         <form class="dashboard-search" method="GET" action="#">
             <input type="text" name="search" placeholder="Поиск по курсам или темам...">
             <button type="submit">🔍</button>

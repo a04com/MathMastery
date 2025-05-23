@@ -19,7 +19,7 @@ questions_geometry = questions['geometry']
 questions_trigonometry = questions['trigonometry']
 questions_ent = questions['ent']
 
-groq_client = Groq(api_key='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')
+groq_client = Groq(api_key='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')
 
 def ask_groq_ai(exercise, user_message):
     messages = [
