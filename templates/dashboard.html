@@ -96,9 +96,15 @@
         <div class="dashboard-welcome">
             Добро пожаловать, {{ username }}{% if title %}, {{ title }}{% endif %}!
         </div>
-        <div class="container dashboard-container">
+        {% set visible_count = (show_courses['algebra']|int + show_courses['geometry']|int + show_courses['trigonometry']|int + show_courses['ent']|int) %}
+        {% set total_topics = algebra_topics|length + geometry_topics|length + trigonometry_topics|length + ent_topics|length %}
+        {% if visible_count == 0 %}
+            <div style="text-align:center; font-size:1.5rem; color:#444; margin-top:40px;">По вашему запросу ничего нет.</div>
+        {% endif %}
+        <div class="container dashboard-container{% if visible_count == 1 and total_topics == 1 %} single-centered{% endif %}">
             <div class="sections-grid">
                 <!-- Алгебра -->
+                {% if show_courses['algebra'] %}
                 <div class="section-card">
                     <div class="section-header">
                         <span>Алгебра</span>
@@ -126,7 +132,9 @@
                         <div class="algebra-progress-label">{{ algebra_solved }} из {{ total_algebra }} решено</div>
                     </div>
                 </div>
+                {% endif %}
                 <!-- Геометрия -->
+                {% if show_courses['geometry'] %}
                 <div class="section-card">
                     <div class="section-header">
                         <span>Геометрия</span>
@@ -154,7 +162,9 @@
                         <div class="geometry-progress-label">{{ geometry_solved }} из {{ total_geometry }} решено</div>
                     </div>
                 </div>
+                {% endif %}
                 <!-- Тригонометрия -->
+                {% if show_courses['trigonometry'] %}
                 <div class="section-card">
                     <div class="section-header">
                         <span>Тригонометрия</span>
@@ -182,7 +192,9 @@
                         <div class="trigonometry-progress-label">{{ trigonometry_solved }} из {{ total_trigonometry }} решено</div>
                     </div>
                 </div>
+                {% endif %}
                 <!-- ЕНТ -->
+                {% if show_courses['ent'] %}
                 <div class="section-card">
                     <div class="section-header">
                         <span>ЕНТ</span>
@@ -210,6 +222,7 @@
                         <div class="ent-progress-label">{{ ent_solved }} из {{ total_ent }} решено</div>
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -281,6 +294,12 @@
     }
     .about-btn { margin-left: 0 !important; }
     .header-btns a { margin-left: 0 !important; }
+    .single-centered.sections-grid, .container.dashboard-container.single-centered .sections-grid {
+        min-height: 60vh;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
     </style>
 </body>
 </html> 

@@ -134,6 +134,62 @@ def dashboard():
         else:
             ent_topics.append((topic, topic))
 
+    # --- Search logic ---
+    search_query = request.args.get('search', '').strip().lower()
+    show_courses = {'algebra': True, 'geometry': True, 'trigonometry': True, 'ent': True}
+    filtered = {
+        'algebra': [],
+        'geometry': [],
+        'trigonometry': [],
+        'ent': []
+    }
+    if search_query:
+        # Check for course name match
+        course_map = {
+            'алгебра': 'algebra',
+            'геометрия': 'geometry',
+            'тригонометрия': 'trigonometry',
+            'ент': 'ent',
+        }
+        if search_query in course_map:
+            for k in show_courses:
+                show_courses[k] = (k == course_map[search_query])
+            if show_courses['algebra']:
+                filtered['algebra'] = algebra_topics
+            if show_courses['geometry']:
+                filtered['geometry'] = geometry_topics
+            if show_courses['trigonometry']:
+                filtered['trigonometry'] = trigonometry_topics
+            if show_courses['ent']:
+                filtered['ent'] = ent_topics
+        else:
+            # Search in all topics
+            for topic, topic_name in algebra_topics:
+                if search_query in topic_name.lower():
+                    show_courses['algebra'] = True
+                    filtered['algebra'].append((topic, topic_name))
+            for topic, topic_name in geometry_topics:
+                if search_query in topic_name.lower():
+                    show_courses['geometry'] = True
+                    filtered['geometry'].append((topic, topic_name))
+            for topic, topic_name in trigonometry_topics:
+                if search_query in topic_name.lower():
+                    show_courses['trigonometry'] = True
+                    filtered['trigonometry'].append((topic, topic_name))
+            for topic, topic_name in ent_topics:
+                if search_query in topic_name.lower():
+                    show_courses['ent'] = True
+                    filtered['ent'].append((topic, topic_name))
+            # Hide courses with no results
+            for k in show_courses:
+                if not filtered[k]:
+                    show_courses[k] = False
+    else:
+        filtered['algebra'] = algebra_topics
+        filtered['geometry'] = geometry_topics
+        filtered['trigonometry'] = trigonometry_topics
+        filtered['ent'] = ent_topics
+
     return render_template(
         'dashboard.html',
         username=username,
@@ -147,10 +203,11 @@ def dashboard():
         total_trigonometry=total_trigonometry,
         ent_solved=ent_solved,
         total_ent=total_ent,
-        algebra_topics=algebra_topics,
-        geometry_topics=geometry_topics,
-        trigonometry_topics=trigonometry_topics,
-        ent_topics=ent_topics
+        algebra_topics=filtered['algebra'],
+        geometry_topics=filtered['geometry'],
+        trigonometry_topics=filtered['trigonometry'],
+        ent_topics=filtered['ent'],
+        show_courses=show_courses
     )
 
 @app.route('/signout')
