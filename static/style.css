@@ -5,8 +5,19 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+html, body {
+    height: 100%;
+    min-height: 100vh;
+}
+
 body {
-    background: linear-gradient(135deg, rgba(246,196,237,0.5), rgba(225,218,230,0.9), #fff 80%) !important;
+    min-height: 100vh;
+    height: 100%;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    background-attachment: fixed;
+}
+
+.center-viewport {
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -16,14 +27,25 @@ body {
 .container {
     width: 100%;
     max-width: 400px;
-    padding: 20px;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-.form-box, .dashboard-box {
+.form-box {
     background: white;
     padding: 40px;
     border-radius: 10px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
 }
 
 h2 {

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Вход{% endblock %}
 {% block content %}
+<div class="center-viewport">
 <div class="container">
     <div class="form-box">
         <h2>Вход</h2>
@@ -22,5 +23,6 @@
         </form>
         <p class="switch-form">Нет аккаунта? <a href="{{ url_for('signup') }}">Зарегистрироваться</a></p>
     </div>
+</div>
 </div>
 {% endblock %} 

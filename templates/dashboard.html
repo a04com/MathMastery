@@ -6,7 +6,6 @@
     <title>Панель управления</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
-        body { background: linear-gradient( 135deg, #f9c823, #fc506e ); min-height: 100vh; margin: 0; font-family: sans-serif; }
         .dashboard-header-bar {
             position: fixed;
             top: 0;
@@ -93,9 +92,6 @@
         </div>
     </div>
     <div class="dashboard-main-content">
-        <div class="dashboard-welcome">
-            Добро пожаловать, {{ username }}{% if title %}, {{ title }}{% endif %}!
-        </div>
         {% set visible_count = (show_courses['algebra']|int + show_courses['geometry']|int + show_courses['trigonometry']|int + show_courses['ent']|int) %}
         {% set total_topics = algebra_topics|length + geometry_topics|length + trigonometry_topics|length + ent_topics|length %}
         {% if visible_count == 0 %}
