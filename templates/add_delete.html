@@ -122,7 +122,7 @@
             selectedCourse.textContent = course;
             const topics = courseTopics[course] || [];
             topicList.innerHTML = topics.map(function(t) {
-                return `<div class='topic-item'><span class='topic-name'>${t}</span><span class='topic-actions'><a href='#' onclick='editTopic("${course}", "${t}");return false;'>Edit</a><a href='#' style='color:#e3342f;' onclick='deleteTopic("${course}", "${t}", this);return false;'>Удалить</a></span></div>`;
+                return `<div class='topic-item'><span class='topic-name'>${t}</span><span class='topic-actions'><a href='#' onclick='editTopic("${course}", "${t}");return false;'>Изменить</a><a href='#' style='color:#e3342f;' onclick='deleteTopic("${course}", "${t}", this);return false;'>Удалить</a></span></div>`;
             }).join('');
         }
         function addTopic() {
@@ -281,7 +281,7 @@
                     closeAddTopicModal();
                     // Add new topic to the topic list visually
                     const topicList = document.getElementById('topic-list');
-                    const newTopicHtml = `<div class='topic-item'><span class='topic-name'>${topic_name}</span><span class='topic-actions'><a href='#' onclick='editTopic("${course}", "${topic}");return false;'>Edit</a><a href='#' style='color:#e3342f;' onclick='deleteTopic("${course}", "${topic}", this);return false;'>Удалить</a></span></div>`;
+                    const newTopicHtml = `<div class='topic-item'><span class='topic-name'>${topic_name}</span><span class='topic-actions'><a href='#' onclick='editTopic("${course}", "${topic}");return false;'>Изменить</a><a href='#' style='color:#e3342f;' onclick='deleteTopic("${course}", "${topic}", this);return false;'>Удалить</a></span></div>`;
                     topicList.insertAdjacentHTML('beforeend', newTopicHtml);
                 } else {
                     alert(data.error || 'Ошибка добавления');
